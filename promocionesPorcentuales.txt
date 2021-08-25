@@ -1,0 +1,5 @@
+4
+aventura:Bosque Negro:Mordor:20
+paisaje:Minas Tirith:Abismo de Helm:35
+degustacion:La Comarca:Lothlorien:15
+aventura:Moria:Bosque Negro:50
