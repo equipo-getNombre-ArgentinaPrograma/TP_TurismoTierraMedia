@@ -1,7 +1,9 @@
-package tierraMedia;
+package objetosDeEntrada;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import lecturaYescritura.LectorDeArchivos;
 
 public class Usuario {
 	private ArrayList<String[]> archivo;

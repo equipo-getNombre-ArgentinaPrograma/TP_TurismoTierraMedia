@@ -1,7 +1,9 @@
-package tierraMedia;
+package objetosDeEntrada;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import lecturaYescritura.LectorDeArchivos;
 
 public class Atraccion {
 	private ArrayList<String[]> archivo;
@@ -41,6 +43,15 @@ public class Atraccion {
 
 	public int getTamanio() {
 		return this.archivo.size();
+	}
+	// usarCupo() devuelve T si el cupo es usado y F si no hay mas cupos para usarse, ademas resta un cupo a la atraccion
+	public boolean usarCupo() {
+		boolean hayCupos = true;
+		if (this.cuposXdia == 0) 
+			hayCupos = false;
+		else 
+			this.cuposXdia--;
+		return hayCupos;
 	}
 
 	public void leerArchivo() {
