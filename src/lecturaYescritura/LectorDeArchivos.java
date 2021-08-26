@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class LectorDeArchivos {
-	public static ArrayList<String[]> leerArchivo(String archivo) throws IOException {
+	public static ArrayList<String[]> leer(String archivo) throws IOException {
 		ArrayList<String[]> salida = new ArrayList<String[]>();
 		String campos[];
 		String linea;

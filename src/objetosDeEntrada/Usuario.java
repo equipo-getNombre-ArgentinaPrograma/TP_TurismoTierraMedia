@@ -42,7 +42,7 @@ public class Usuario {
 
 	public void leerArchivo() {
 		try {
-			this.archivo = LectorDeArchivos.leerArchivo("usuarios.txt");
+			this.archivo = LectorDeArchivos.leer("usuarios.txt");
 		} catch (IOException e) {
 			System.err.println("No se pudo leer el archivo");
 		}

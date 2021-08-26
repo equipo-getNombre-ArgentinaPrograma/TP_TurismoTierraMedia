@@ -7,7 +7,9 @@ import objetosDeEntrada.*;
 public class GenerarPromocion {
 	ArrayList<Promocion> promosApt;
 	String nombreUsuario;
-	int indiceUsuario;
+	int numeroUsuario;
+	int indice = 0;
+	int cantidadDePromos;
 	Promocion promocionSugerida;
 
 	Atraccion[] atracciones;
@@ -19,8 +21,7 @@ public class GenerarPromocion {
 
 	GenerarArray generador;
 
-	public GenerarPromocion(String nombreUsuario) {
-		this.nombreUsuario = nombreUsuario;
+	public GenerarPromocion() {
 		this.generador = new GenerarArray();
 		this.usuarios = generador.deUsuarios();
 		this.atracciones = generador.deAtracciones();
@@ -28,12 +29,18 @@ public class GenerarPromocion {
 		this.promosAbs = generador.dePromocionesAbsolutas();
 		this.promosAxB = generador.dePromocionesAxB();
 
-		this.indiceUsuario = this.buscarIndice();
-
-		for (int i = 0; i < this.buscarPromosAptas().size(); i++) {
-			System.out.println(this.buscarPromosAptas().get(i).toString());
-		}
-
+	}
+	
+	public Promocion para(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
+		this.numeroUsuario = this.buscarIndice();
+		this.cantidadDePromos = this.buscarPromosAptas().size();
+		
+		this.promosAptas = new Promocion[this.cantidadDePromos];
+		
+		this.buscarPromosAptas().get(this.indice).toString();
+		
+		return promocionSugerida;
 	}
 
 	public int buscarIndice() {
@@ -54,8 +61,8 @@ public class GenerarPromocion {
 
 	public void addToList(Promocion[] promos) {
 		for (int i = 0; i < promos.length; i++) {
-			if (usuarios[this.indiceUsuario].getPresupuesto() >= promos[i].getPrecio()
-					&& usuarios[this.indiceUsuario].getTiempoDisponible() >= promos[i].getTiempoNecesario()) {
+			if (usuarios[this.numeroUsuario].getPresupuesto() >= promos[i].getPrecio()
+					&& usuarios[this.numeroUsuario].getTiempoDisponible() >= promos[i].getTiempoNecesario()) {
 				promosApt.add(promos[i]);
 			}
 		}

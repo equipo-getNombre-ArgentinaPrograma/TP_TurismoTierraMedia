@@ -59,7 +59,7 @@ public abstract class Promocion {
 
 	public void leerArchivo() {
 		try {
-			this.archivoPromos = LectorDeArchivos.leerArchivo(this.nombreArchivo);
+			this.archivoPromos = LectorDeArchivos.leer(this.nombreArchivo);
 		} catch (IOException e) {
 			System.err.println("No se pudo leer el archivo");
 		}

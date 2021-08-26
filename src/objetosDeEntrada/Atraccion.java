@@ -56,7 +56,7 @@ public class Atraccion {
 
 	public void leerArchivo() {
 		try {
-			this.archivo = LectorDeArchivos.leerArchivo("atracciones.txt");
+			this.archivo = LectorDeArchivos.leer("atracciones.txt");
 		} catch (IOException e) {
 			System.err.println("No se pudo leer el archivo");
 		}
