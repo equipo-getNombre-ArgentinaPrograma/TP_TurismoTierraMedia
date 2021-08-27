@@ -1,5 +1,8 @@
 package generadores;
 
+import java.io.IOException;
+
+import lecturaYescritura.*;
 import objetosDeEntrada.*;
 
 public class GenerarArray {
@@ -10,71 +13,67 @@ public class GenerarArray {
 	Promocion promocionAxB;
 
 	Atraccion[] atracciones;
+	String[] tmp;
 	int indice;
 
-	public GenerarArray() {
-		this.atraccion = new Atraccion();
-		this.usuario = new Usuario();
-	}
-
-	public Atraccion[] deAtracciones() {
-		atraccion.leerArchivo();
-		Atraccion[] atracciones = new Atraccion[atraccion.getTamanio()];
-		indice = atraccion.getIndice();
-		do {
-			atracciones[indice] = atraccion.siguienteAtraccion();
-			indice = atraccion.getIndice();
-		} while (indice != 0);
-		this.atracciones = atracciones;
+	public static Atraccion[] deAtracciones() throws IOException {
+		LectorDeArchivos lector = new LectorDeArchivos("atracciones.txt");
+		int cantidadDeDatos = lector.abrir();
+		Atraccion[] atracciones = new Atraccion[cantidadDeDatos];
+		for (int i = 0; i < cantidadDeDatos; i++) {
+			String[] tmp = lector.leerLinea();
+			atracciones[i] = new Atraccion(tmp[0], Double.parseDouble(tmp[1]), Double.parseDouble(tmp[2]),
+					Integer.parseInt(tmp[3]), tmp[4]);
+			System.out.println(atracciones[i].toString());
+		}
 		return atracciones;
 	}
 
-	public Usuario[] deUsuarios() {
-		usuario.leerArchivo();
-		Usuario[] usuarios = new Usuario[usuario.getTamanio()];
-		indice = usuario.getIndice();
-		do {
-			usuarios[indice] = usuario.siguienteUsuario();
-			indice = usuario.getIndice();
-		} while (indice != 0);
+	public static Usuario[] deUsuarios() throws IOException {
+		LectorDeArchivos lector = new LectorDeArchivos("usuarios.txt");
+		int cantidadDeDatos = lector.abrir();
+		Usuario[] usuarios = new Usuario[cantidadDeDatos];
+		for (int i = 0; i < cantidadDeDatos; i++) {
+			String[] tmp = lector.leerLinea();
+			usuarios[i] = new Usuario(tmp[0], Double.parseDouble(tmp[1]), Double.parseDouble(tmp[2]), (tmp[3]));
+			System.out.println(usuarios[i].toString());
+		}
 		return usuarios;
 	}
 
-	public Promocion[] dePromocionesPorcentuales() {
-		this.promocionPorcentual = new PromocionPorcentual(atracciones);
-		promocionPorcentual.leerArchivo();
-		Promocion[] promocionesPorcentuales = new Promocion[promocionPorcentual.getTamanio()];
-		indice = promocionPorcentual.getIndice();
-		do {
-			promocionesPorcentuales[indice] = (PromocionPorcentual) promocionPorcentual.siguientePromocion();
-			promocionesPorcentuales[indice].getPrecio();
-			indice = promocionPorcentual.getIndice();
-		} while (indice != 0);
-		return promocionesPorcentuales;
+	public static Promocion[] dePromocionesPorcentuales(Atraccion[] atracciones) throws IOException {
+		LectorDeArchivos lector = new LectorDeArchivos("promocionesPorcentuales.txt");
+		int cantidadDeDatos = lector.abrir();
+		Promocion[] promociones = new Promocion[cantidadDeDatos];
+		for (int i = 0; i < cantidadDeDatos; i++) {
+			String[] tmp = lector.leerLinea();
+			promociones[i] = new PromocionPorcentual(atracciones, tmp[0], tmp[1], tmp[2], Double.parseDouble(tmp[3]));
+			System.out.println(promociones[i].toString());
+		}
+		return promociones;
 	}
 
-	public Promocion[] dePromocionesAbsolutas() {
-		this.promocionAbsoluta = new PromocionAbsoluta(atracciones);
-		promocionAbsoluta.leerArchivo();
-		Promocion[] promocionesAbsolutas = new Promocion[promocionAbsoluta.getTamanio()];
-		indice = promocionAbsoluta.getIndice();
-		do {
-			promocionesAbsolutas[indice] = (PromocionAbsoluta) promocionAbsoluta.siguientePromocion();
-			indice = promocionAbsoluta.getIndice();
-		} while (indice != 0);
-		return promocionesAbsolutas;
+	public static Promocion[] dePromocionesAbsolutas(Atraccion[] atracciones) throws IOException {
+		LectorDeArchivos lector = new LectorDeArchivos("promocionesAbsolutas.txt");
+		int cantidadDeDatos = lector.abrir();
+		Promocion[] promociones = new Promocion[cantidadDeDatos];
+		for (int i = 0; i < cantidadDeDatos; i++) {
+			String[] tmp = lector.leerLinea();
+			promociones[i] = new PromocionAbsoluta(atracciones, tmp[0], tmp[1], tmp[2], Double.parseDouble(tmp[3]));
+			System.out.println(promociones[i].toString());
+		}
+		return promociones;
 	}
 
-	public Promocion[] dePromocionesAxB() {
-		this.promocionAxB = new PromocionAxB(atracciones);
-		promocionAxB.leerArchivo();
-		Promocion[] promocionesAxB = new Promocion[promocionAxB.getTamanio()];
-		indice = promocionAxB.getIndice();
-		do {
-			promocionesAxB[indice] = (PromocionAxB) promocionAxB.siguientePromocion();
-			promocionesAxB[indice].getPrecio();
-			indice = promocionAxB.getIndice();
-		} while (indice != 0);
-		return promocionesAxB;
+	public static Promocion[] dePromocionesAxB(Atraccion[] atracciones) throws IOException {
+		LectorDeArchivos lector = new LectorDeArchivos("promocionesAxB.txt");
+		int cantidadDeDatos = lector.abrir();
+		Promocion[] promociones = new Promocion[cantidadDeDatos];
+		for (int i = 0; i < cantidadDeDatos; i++) {
+			String[] tmp = lector.leerLinea();
+			promociones[i] = new PromocionAxB(atracciones, tmp[0], tmp[1], tmp[2], tmp[3]);
+			System.out.println(promociones[i].toString());
+		}
+		return promociones;
 	}
 }

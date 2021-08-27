@@ -10,31 +10,41 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class LectorDeArchivos {
-	public static ArrayList<String[]> leer(String archivo) throws IOException {
-		ArrayList<String[]> salida = new ArrayList<String[]>();
-		String campos[];
-		String linea;
-		FileReader fr = null;
-		BufferedReader br = null;
-		Scanner sc = null;
+	String nombreArchivo;
+	ArrayList<String[]> salida = new ArrayList<String[]>();
+	String campos[];
+	String linea;
+	FileReader fr = null;
+	BufferedReader br = null;
+	Scanner sc = null;
 
+	public LectorDeArchivos(String nombreArchivo) {
+		this.nombreArchivo = nombreArchivo;
+	}
+
+	public int abrir() throws IOException {
+		System.out.println("Leyendo '" + this.nombreArchivo + "' ...");
+		System.out.println("**************************");
 		try {
-			fr = new FileReader("./" + archivo);
+			fr = new FileReader("./" + this.nombreArchivo);
 		} catch (FileNotFoundException fnf) {
 			fnf.printStackTrace();
 		}
-		br = new BufferedReader(fr);
-		sc = new Scanner(new File("./" + archivo));
+		// inicializo el scanner leo la primera linea del archivo
+		// para saber cuantos datos debo leer
+		sc = new Scanner(new File("./" + this.nombreArchivo));
 		sc.useLocale(Locale.ENGLISH);
-		int cantidad = sc.nextInt();
-		sc.close();
+		// inicializo el reader y lo posiciono en la segunda linea
+		// del archivo (donde empiezan los datos)
+		br = new BufferedReader(fr);
 		br.readLine();
-		for (int i = 0; i < cantidad; i++) {
-			linea = br.readLine();
-			campos = linea.split(":");
-			salida.add(campos);
-		}
 
-		return salida;
+		// devuelvo la cantidad de datos a leer
+		return sc.nextInt();
+	}
+
+	public String[] leerLinea() throws IOException {
+		linea = br.readLine();
+		return campos = linea.split(",");
 	}
 }

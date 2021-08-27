@@ -1,21 +1,20 @@
 package objetosDeEntrada;
 
-import lecturaYescritura.LectorDeArchivos;
-import java.io.IOException;
-import java.util.ArrayList;
-
 public abstract class Promocion {
-	protected ArrayList<String[]> archivoPromos;
 	protected Atraccion[] atracciones;
 	protected String atraccion1;
 	protected String atraccion2;
 	protected double precio;
 	protected String tipoDeAtraccion;
-	protected int indice = 0;
 	protected String nombreArchivo;
 	protected double tiempoNecesario;
 
-	public abstract Promocion siguientePromocion();
+	public Promocion(Atraccion[] atracciones, String tipo, String atraccion1, String atraccion2) {
+		this.atracciones = atracciones;
+		this.tipoDeAtraccion = tipo;
+		this.atraccion1 = atraccion1;
+		this.atraccion2 = atraccion2;
+	}
 
 	public double calcularPrecio() {
 		this.precio = 0;
@@ -33,40 +32,24 @@ public abstract class Promocion {
 
 	public double buscarEnLaAtraccion(String atraccion, String datoAbuscar) {
 		if (datoAbuscar == "tiempoDeRealizacion") {
-			for (int i = indice; i < this.atracciones.length; i++) {
+			for (int i = 0; i < this.atracciones.length; i++) {
 				if (this.atracciones[i].getNombre().equals(atraccion))
 					return this.atracciones[i].getTiempoDeRealizacion();
 			}
 		} else if (datoAbuscar == "costoXvisita") {
-			for (int i = indice; i < this.atracciones.length; i++) {
+			for (int i = 0; i < this.atracciones.length; i++) {
 				if (this.atracciones[i].getNombre().equals(atraccion))
 					return this.atracciones[i].getCostoXvisita();
 			}
 		}
 		return 0;
 	}
-
-	public void aumentarIndice() {
-		if (this.indice + 1 == this.getTamanio())
-			this.indice = 0;
-		else
-			this.indice++;
-	}
-
-	public int getTamanio() {
-		return this.archivoPromos.size();
-	}
-
-	public void leerArchivo() {
-		try {
-			this.archivoPromos = LectorDeArchivos.leer(this.nombreArchivo);
-		} catch (IOException e) {
-			System.err.println("No se pudo leer el archivo");
-		}
-	}
-
-	public int getIndice() {
-		return indice;
+	
+	@Override
+	public String toString() {
+		String atraccion;
+		atraccion = ("[" + this.atraccion1 + ", " + this.atraccion2 + ", ");
+		return atraccion;
 	}
 
 	public String getAtraccion1() {

@@ -22,12 +22,6 @@ public class GenerarPromocion {
 	GenerarArray generador;
 
 	public GenerarPromocion() {
-		this.generador = new GenerarArray();
-		this.usuarios = generador.deUsuarios();
-		this.atracciones = generador.deAtracciones();
-		this.promosPor = generador.dePromocionesPorcentuales();
-		this.promosAbs = generador.dePromocionesAbsolutas();
-		this.promosAxB = generador.dePromocionesAxB();
 
 	}
 	

@@ -1,9 +1,6 @@
 package objetosDeEntrada;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import lecturaYescritura.LectorDeArchivos;
 
 public class Atraccion {
 	private ArrayList<String[]> archivo;
@@ -14,7 +11,12 @@ public class Atraccion {
 	private String tipoDeAtraccion;
 	private int indice = 0;
 
-	public Atraccion() {
+	public Atraccion(String nombre, double costo, double tiempo, int cupos, String tipo) {
+	this.nombre = nombre;
+	this.costoXvisita = costo;
+	this.tiempoDeRealizacion = tiempo;
+	this.cuposXdia = cupos;
+	this.tipoDeAtraccion = tipo;
 	}
 
 	public String getNombre() {
@@ -52,28 +54,6 @@ public class Atraccion {
 		else 
 			this.cuposXdia--;
 		return hayCupos;
-	}
-
-	public void leerArchivo() {
-		try {
-			this.archivo = LectorDeArchivos.leer("atracciones.txt");
-		} catch (IOException e) {
-			System.err.println("No se pudo leer el archivo");
-		}
-	}
-
-	public Atraccion siguienteAtraccion() {
-		Atraccion tmp = new Atraccion();
-		String[] campos = new String[5];
-		campos = this.archivo.get(indice);
-		tmp.nombre = campos[0];
-		tmp.costoXvisita = Double.parseDouble(campos[1]);
-		tmp.tiempoDeRealizacion = Double.parseDouble(campos[2]);
-		tmp.cuposXdia = Integer.parseInt(campos[3]);
-		tmp.tipoDeAtraccion = campos[4];
-		this.aumentarIndice();
-
-		return tmp;
 	}
 
 	public void aumentarIndice() {
