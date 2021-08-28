@@ -19,7 +19,7 @@ public class PromocionPorcentual extends Promocion {
 
 	@Override
 	public String toString() {
-		return super.toString() + Double.toString(this.descuento) + "]";
+		return super.toString() + "por " + this.getPrecio() + " monedas, gracias al descuento del "+ this.descuento+ "%.";
 	}
 
 	public double getDescuento() {

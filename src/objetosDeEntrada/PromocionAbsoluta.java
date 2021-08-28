@@ -10,7 +10,7 @@ public class PromocionAbsoluta extends Promocion {
 
 	@Override
 	public String toString() {
-		return super.toString() + Double.toString(this.precio) + "]";
+		return super.toString() + "por " + this.getPrecio() + " monedas.";
 	}
 
 	@Override

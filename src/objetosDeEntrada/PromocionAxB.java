@@ -19,6 +19,6 @@ public class PromocionAxB extends Promocion {
 
 	@Override
 	public String toString() {
-		return super.toString() + this.atraccionGratis + "]";
+		return super.toString() + "por " + this.getPrecio() + " monedas, y ademas se lleva " + this.atraccionGratis +" gratis.";
 	}
 }

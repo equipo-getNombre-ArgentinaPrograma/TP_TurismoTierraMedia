@@ -23,8 +23,8 @@ public class GenerarArray {
 		for (int i = 0; i < cantidadDeDatos; i++) {
 			String[] tmp = lector.leerLinea();
 			atracciones[i] = new Atraccion(tmp[0], Double.parseDouble(tmp[1]), Double.parseDouble(tmp[2]),
-					Integer.parseInt(tmp[3]), tmp[4]);
-			System.out.println(atracciones[i].toString());
+			Integer.parseInt(tmp[3]), tmp[4]);
+			//System.out.println(atracciones[i].toString());
 		}
 		return atracciones;
 	}
@@ -36,7 +36,7 @@ public class GenerarArray {
 		for (int i = 0; i < cantidadDeDatos; i++) {
 			String[] tmp = lector.leerLinea();
 			usuarios[i] = new Usuario(tmp[0], Double.parseDouble(tmp[1]), Double.parseDouble(tmp[2]), (tmp[3]));
-			System.out.println(usuarios[i].toString());
+			//System.out.println(usuarios[i].toString());
 		}
 		return usuarios;
 	}
@@ -48,7 +48,7 @@ public class GenerarArray {
 		for (int i = 0; i < cantidadDeDatos; i++) {
 			String[] tmp = lector.leerLinea();
 			promociones[i] = new PromocionPorcentual(atracciones, tmp[0], tmp[1], tmp[2], Double.parseDouble(tmp[3]));
-			System.out.println(promociones[i].toString());
+			//System.out.println(promociones[i].toString());
 		}
 		return promociones;
 	}
@@ -60,7 +60,7 @@ public class GenerarArray {
 		for (int i = 0; i < cantidadDeDatos; i++) {
 			String[] tmp = lector.leerLinea();
 			promociones[i] = new PromocionAbsoluta(atracciones, tmp[0], tmp[1], tmp[2], Double.parseDouble(tmp[3]));
-			System.out.println(promociones[i].toString());
+			//System.out.println(promociones[i].toString());
 		}
 		return promociones;
 	}
@@ -72,7 +72,7 @@ public class GenerarArray {
 		for (int i = 0; i < cantidadDeDatos; i++) {
 			String[] tmp = lector.leerLinea();
 			promociones[i] = new PromocionAxB(atracciones, tmp[0], tmp[1], tmp[2], tmp[3]);
-			System.out.println(promociones[i].toString());
+			//System.out.println(promociones[i].toString());
 		}
 		return promociones;
 	}

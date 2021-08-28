@@ -55,4 +55,15 @@ public class Usuario {
 				+ Double.toString(this.tiempoDisponible) + ", " + this.tipoPreferido + "]");
 		return usuarios;
 	}
+
+	public void adquirir(Promocion promocionSugerida) {
+		if(puedoComprar(promocionSugerida))
+			this.tiempoDisponible -= promocionSugerida.getTiempoNecesario();
+			this.presupuesto -= promocionSugerida.getPrecio();
+	}
+
+	public boolean puedoComprar(Promocion promocionSugerida) {
+		return (promocionSugerida.getTiempoNecesario() <= this.tiempoDisponible
+				&& promocionSugerida.getPrecio() <= this.presupuesto);
+	}
 }
