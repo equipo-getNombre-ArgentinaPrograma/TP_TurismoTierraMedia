@@ -3,19 +3,51 @@ package tierraMedia;
 import java.io.IOException;
 
 import generadores.*;
-import objetosDeEntrada.*;
 
 public class App {
 	public static void main(String[] args) throws IOException {
-		Atraccion[] atracciones = GenerarArray.deAtracciones();
+		GenerarPromocion generador = new GenerarPromocion();
+		generador.para("Sam");
 		System.out.println();
-		Usuario[] usuarios = GenerarArray.deUsuarios();
+		System.out.println("********* GENERADOR *********");
 		System.out.println();
-		Promocion[] promosPor = GenerarArray.dePromocionesPorcentuales(atracciones);
+		
+		generador.sugerirPromocion();
+		generador.aceptarPromocion();
+		
+		generador.sugerirPromocion();
+		generador.rechazarPromocion();
+		
+		generador.sugerirPromocion();
+		generador.aceptarPromocion();
+		
+		generador.sugerirPromocion();
+		generador.rechazarPromocion();
+		
+		generador.sugerirPromocion();
+		generador.rechazarPromocion();
+
+		generador.sugerirPromocion();
+		generador.aceptarPromocion();
+
+		generador.sugerirPromocion();
+		generador.aceptarPromocion();
+
+		generador.sugerirPromocion();
+		generador.aceptarPromocion();
+
+		generador.sugerirPromocion();
+		generador.aceptarPromocion();
+
+		generador.sugerirPromocion();
+		generador.aceptarPromocion();
+		
+		generador.sugerirPromocion();
+		generador.aceptarPromocion();
+		generador.rechazarPromocion();
 		System.out.println();
-		Promocion[] promosAbs = GenerarArray.dePromocionesAbsolutas(atracciones);
+		generador.mostrarPromocionesAdquiridas();
 		System.out.println();
-		Promocion[] promosAxB = GenerarArray.dePromocionesAxB(atracciones);
-		System.out.println();
+		generador.mostrarPromocionesNoAdquiridas();
 	}
 }

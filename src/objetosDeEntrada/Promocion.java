@@ -1,6 +1,9 @@
 package objetosDeEntrada;
 
-public abstract class Promocion {
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
+public abstract class Promocion implements Comparable<Promocion>{
 	protected Atraccion[] atracciones;
 	protected String atraccion1;
 	protected String atraccion2;
@@ -8,6 +11,8 @@ public abstract class Promocion {
 	protected String tipoDeAtraccion;
 	protected String nombreArchivo;
 	protected double tiempoNecesario;
+	
+	NumberFormat nf = new DecimalFormat("##.###");
 
 	public Promocion(Atraccion[] atracciones, String tipo, String atraccion1, String atraccion2) {
 		this.atracciones = atracciones;
@@ -44,7 +49,7 @@ public abstract class Promocion {
 		}
 		return 0;
 	}
-	
+
 	@Override
 	public String toString() {
 		String atraccion;
@@ -70,5 +75,13 @@ public abstract class Promocion {
 
 	public double getTiempoNecesario() {
 		return calcularTiempoNecesario();
+	}
+	
+	@Override
+	public int compareTo(Promocion otro) {
+		int comparacionPorPrecio = Double.compare(otro.getPrecio(), this.precio);
+		if (comparacionPorPrecio != 0)
+	        return comparacionPorPrecio;
+		return Double.compare(this.tiempoNecesario, otro.getTiempoNecesario());
 	}
 }

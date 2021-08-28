@@ -12,11 +12,11 @@ public class Atraccion {
 	private int indice = 0;
 
 	public Atraccion(String nombre, double costo, double tiempo, int cupos, String tipo) {
-	this.nombre = nombre;
-	this.costoXvisita = costo;
-	this.tiempoDeRealizacion = tiempo;
-	this.cuposXdia = cupos;
-	this.tipoDeAtraccion = tipo;
+		this.nombre = nombre;
+		this.costoXvisita = costo;
+		this.tiempoDeRealizacion = tiempo;
+		this.cuposXdia = cupos;
+		this.tipoDeAtraccion = tipo;
 	}
 
 	public String getNombre() {
@@ -46,12 +46,14 @@ public class Atraccion {
 	public int getTamanio() {
 		return this.archivo.size();
 	}
-	// usarCupo() devuelve T si el cupo es usado y F si no hay mas cupos para usarse, ademas resta un cupo a la atraccion
+
+	// usarCupo() devuelve T si el cupo es usado y F si no hay mas cupos para
+	// usarse, ademas resta un cupo a la atraccion
 	public boolean usarCupo() {
 		boolean hayCupos = true;
-		if (this.cuposXdia == 0) 
+		if (this.cuposXdia == 0)
 			hayCupos = false;
-		else 
+		else
 			this.cuposXdia--;
 		return hayCupos;
 	}
@@ -66,11 +68,9 @@ public class Atraccion {
 	@Override
 	public String toString() {
 		String atraccion;
-		atraccion = ("[" + this.nombre + ", "
-						 + Double.toString(this.costoXvisita) + ", "
-						 + Double.toString(this.tiempoDeRealizacion) + ", "
-						 + Integer.toString(this.cuposXdia) + ", "
-						 + this.tipoDeAtraccion + "]");
+		atraccion = ("[" + this.nombre + ", " + Double.toString(this.costoXvisita) + ", "
+				+ Double.toString(this.tiempoDeRealizacion) + ", " + Integer.toString(this.cuposXdia) + ", "
+				+ this.tipoDeAtraccion + "]");
 		return atraccion;
 	}
 }

@@ -3,7 +3,8 @@ package objetosDeEntrada;
 public class PromocionPorcentual extends Promocion {
 	private double descuento;
 
-	public PromocionPorcentual(Atraccion[] atracciones, String tipo, String atraccion1, String atraccion2, double descuento) {
+	public PromocionPorcentual(Atraccion[] atracciones, String tipo, String atraccion1, String atraccion2,
+			double descuento) {
 		super(atracciones, tipo, atraccion1, atraccion2);
 		this.descuento = descuento;
 	}
