@@ -19,6 +19,7 @@ public class Atraccion {
 		this.tipoDeAtraccion = tipo;
 	}
 
+	// Getters
 	public String getNombre() {
 		return nombre;
 	}
@@ -40,14 +41,14 @@ public class Atraccion {
 	}
 
 	public int getIndice() {
-		return this.indice;
+		return indice;
 	}
 
 	public int getTamanio() {
-		return this.archivo.size();
+		return archivo.size();
 	}
 
-	// usarCupo() devuelve T si el cupo es usado y F si no hay mas cupos para
+	// UsarCupo() devuelve True si el cupo es usado y False si no hay mas cupos para
 	// usarse, ademas resta un cupo a la atraccion
 	public boolean usarCupo() {
 		boolean hayCupos = true;
@@ -56,13 +57,6 @@ public class Atraccion {
 		else
 			this.cuposXdia--;
 		return hayCupos;
-	}
-
-	public void aumentarIndice() {
-		if (this.indice + 1 == this.getTamanio())
-			this.indice = 0;
-		else
-			this.indice++;
 	}
 
 	@Override

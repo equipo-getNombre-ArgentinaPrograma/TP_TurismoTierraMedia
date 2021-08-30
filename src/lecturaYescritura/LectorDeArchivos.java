@@ -23,14 +23,14 @@ public class LectorDeArchivos {
 	}
 
 	public int abrir() throws IOException {
-		System.out.println("Leyendo '" + this.nombreArchivo + "' ...");
+		System.out.println("Leyendo '" + this.nombreArchivo + "'...");
 		System.out.println("**************************");
 		try {
 			fr = new FileReader("./" + this.nombreArchivo);
 		} catch (FileNotFoundException fnf) {
 			fnf.printStackTrace();
 		}
-		// inicializo el scanner leo la primera linea del archivo
+		// inicializo el scanner, leo la primera linea del archivo
 		// para saber cuantos datos debo leer
 		sc = new Scanner(new File("./" + this.nombreArchivo));
 		sc.useLocale(Locale.ENGLISH);

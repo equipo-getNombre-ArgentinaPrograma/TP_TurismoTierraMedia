@@ -9,8 +9,6 @@ import objetosDeEntrada.*;
 public class GenerarPromocion {
 	ArrayList<Promocion> promosApt;
 	ArrayList<Promocion> promosNoApt;
-	ArrayList<Promocion> promosAdquiridas = new ArrayList<Promocion>();
-	ArrayList<Promocion> promosNoAdquiridas = new ArrayList<Promocion>();
 	String nombreUsuario;
 	int numeroUsuario;
 	int indice = 0;
@@ -18,7 +16,7 @@ public class GenerarPromocion {
 	int usuarioElige;
 	boolean hayPromoSugerida = true;
 	Promocion promocionSugerida;
-
+	// Declaracion de arrays que se inicializaran con el constructor
 	Atraccion[] atracciones;
 	Usuario[] usuarios;
 	Promocion[] promosPor;
@@ -26,6 +24,7 @@ public class GenerarPromocion {
 	Promocion[] promosAxB;
 	Promocion[] promosAptas;
 
+	// Genera los arrays en base a los datos leidos desde el archivo
 	public GenerarPromocion() throws IOException {
 		this.atracciones = GenerarArray.deAtracciones();
 		this.usuarios = GenerarArray.deUsuarios();
@@ -35,6 +34,26 @@ public class GenerarPromocion {
 		this.usuarioElige = -1;
 	}
 
+	// Constructor con parametro
+	public GenerarPromocion(String nombreUsuario) throws IOException {
+		this();
+		para(nombreUsuario);
+	}
+
+	// Getters
+	public Usuario getUsuario() {
+		return usuarios[this.numeroUsuario];
+	}
+
+	public ArrayList<Promocion> getPromosAdquiridas() {
+		return this.usuarios[this.numeroUsuario].getPromosAdquiridas();
+	}
+
+	public ArrayList<Promocion> getPromosNoAdquiridas() {
+		return this.usuarios[this.numeroUsuario].getPromosAdquiridas();
+	}
+
+	// Guarda las promociones aptas para el usuario en una lista
 	public void para(String nombreUsuario) {
 		this.nombreUsuario = nombreUsuario;
 		this.numeroUsuario = this.buscarIndice();
@@ -50,12 +69,7 @@ public class GenerarPromocion {
 		}
 	}
 
-	public Usuario getUsuario() {
-		return usuarios[this.numeroUsuario];
-	}
-
 	public void sugerirPromocion() {
-		// System.out.println("sugerir");
 		this.buscarPromosAptas();
 		if (promosApt.size() >= 1) {
 			promocionSugerida = promosApt.get(0);
@@ -66,15 +80,14 @@ public class GenerarPromocion {
 				this.hayPromoSugerida = true;
 			} else {
 				if (usuarioElige == 1) {
-					this.promosAdquiridas.add(promocionSugerida);
+					// this.promosAdquiridas.add(promocionSugerida);
 					this.usuarios[this.numeroUsuario].adquirir(promocionSugerida);
 					usuarioElige = -1;
-					// System.out.println("acepto");
 				}
 				if (usuarioElige == 0) {
-					this.promosNoAdquiridas.add(promocionSugerida);
+					// this.promosNoAdquiridas.add(promocionSugerida);
+					this.usuarios[this.numeroUsuario].rechazar(promocionSugerida);
 					usuarioElige = -1;
-					// System.out.println("rechazo");
 				}
 			}
 		} else
@@ -107,7 +120,6 @@ public class GenerarPromocion {
 	}
 
 	public void sugerirPromocionNoApta() {
-		// System.out.println("sugerir");
 		this.buscarPromosAptas();
 		if (promosNoApt.size() >= 1) {
 			promocionSugerida = promosNoApt.get(0);
@@ -118,14 +130,14 @@ public class GenerarPromocion {
 				this.hayPromoSugerida = true;
 			} else {
 				if (usuarioElige == 1) {
-					this.promosAdquiridas.add(promocionSugerida);
+					// this.promosAdquiridas.add(promocionSugerida);
+					this.usuarios[this.numeroUsuario].adquirir(promocionSugerida);
 					usuarioElige = -1;
-					// System.out.println("acepto");
 				}
 				if (usuarioElige == 0) {
-					this.promosNoAdquiridas.add(promocionSugerida);
+					// this.promosNoAdquiridas.add(promocionSugerida);
+					this.usuarios[this.numeroUsuario].rechazar(promocionSugerida);
 					usuarioElige = -1;
-					// System.out.println("rechazo");
 				}
 			}
 		} else {
@@ -148,7 +160,6 @@ public class GenerarPromocion {
 		addToList(promosPor);
 		addToList(promosAbs);
 		addToList(promosAxB);
-
 		this.ordenarPromos();
 	}
 
@@ -161,6 +172,7 @@ public class GenerarPromocion {
 		}
 	}
 
+	// Aniade a la lista de promos aptas y no aptas los objetos del array
 	public void addToList(Promocion[] promos) {
 		for (int i = 0; i < promos.length; i++) {
 			if (usuarios[this.numeroUsuario].getPresupuesto() >= promos[i].getPrecio()
@@ -175,22 +187,23 @@ public class GenerarPromocion {
 
 	private boolean yaFueSugerida(Promocion promocion) {
 		boolean fueSugerida = false;
-		for (int i = 0; i < this.promosAdquiridas.size(); i++) {
-			if (this.promosAdquiridas.get(i).equals(promocion))
+		for (int i = 0; i < this.getPromosAdquiridas().size(); i++) {
+			if (this.getPromosAdquiridas().get(i).equals(promocion))
 				fueSugerida = true;
 		}
-		for (int i = 0; i < this.promosNoAdquiridas.size(); i++) {
-			if (this.promosNoAdquiridas.get(i).equals(promocion))
+		for (int i = 0; i < this.getPromosNoAdquiridas().size(); i++) {
+			if (this.getPromosNoAdquiridas().get(i).equals(promocion))
 				fueSugerida = true;
 		}
 		return fueSugerida;
 	}
 
+	// Muestran el estado de los arrays en consola
 	public void mostrarPromosAdquiridas() {
-		if (promosAdquiridas.size() > 0) {
+		if (this.getPromosAdquiridas().size() > 0) {
 			System.out.println("Promociones Adquiridas:");
-			for (int i = 0; i < promosAdquiridas.size(); i++)
-				System.out.println(promosAdquiridas.get(i).toString());
+			for (int i = 0; i < this.getPromosAdquiridas().size(); i++)
+				System.out.println(this.getPromosAdquiridas().get(i).toString());
 		} else
 			System.out.println(this.usuarios[this.numeroUsuario].getNombre() + " no ha adquirido ninguna promocion.");
 		System.out.println();
@@ -206,10 +219,10 @@ public class GenerarPromocion {
 	}
 
 	public void mostrarPromosRechazadas() {
-		if (promosAdquiridas.size() > 0) {
+		if (this.getPromosNoAdquiridas().size() > 0) {
 			System.out.println("Promociones Rechazadas:");
-			for (int i = 0; i < promosNoAdquiridas.size(); i++)
-				System.out.println(promosNoAdquiridas.get(i).toString());
+			for (int i = 0; i < this.getPromosNoAdquiridas().size(); i++)
+				System.out.println(this.getPromosNoAdquiridas().get(i).toString());
 		} else
 			System.out.println(this.usuarios[this.numeroUsuario].getNombre() + " no ha rechazado ninguna promocion.");
 		System.out.println();

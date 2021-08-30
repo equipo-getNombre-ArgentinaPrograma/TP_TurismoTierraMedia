@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class Usuario {
 	private ArrayList<String[]> archivo;
+	private ArrayList<Promocion> promosAdquiridas = new ArrayList<Promocion>();
+	private ArrayList<Promocion> promosNoAdquiridas = new ArrayList<Promocion>();
 	private String nombre;
 	private double presupuesto;
 	private double tiempoDisponible;
@@ -17,6 +19,7 @@ public class Usuario {
 		this.tipoPreferido = tipo;
 	}
 
+	// Getters
 	public String getNombre() {
 		return nombre;
 	}
@@ -41,11 +44,34 @@ public class Usuario {
 		return this.archivo.size();
 	}
 
-	public void aumentarIndice() {
-		if (this.indice + 1 == this.getTamanio())
-			this.indice = 0;
-		else
-			this.indice++;
+	public ArrayList<Promocion> getPromosAdquiridas() {
+		return promosAdquiridas;
+	}
+
+	public ArrayList<Promocion> getPromosNoAdquiridas() {
+		return promosNoAdquiridas;
+	}
+
+	// Adquiere la promocion sumandola a la lista de promos adquiridas y resta
+	// tiempo y presupuesto
+	public void adquirir(Promocion promocionSugerida) {
+		if (puedoComprar(promocionSugerida)) {
+			this.tiempoDisponible -= promocionSugerida.getTiempoNecesario();
+			this.presupuesto -= promocionSugerida.getPrecio();
+			this.promosAdquiridas.add(promocionSugerida);
+		}
+	}
+
+	// Rechaza la promocion sumandola a la lista de promos NO adquiridas para que no
+	// vuelva a ser sugerida
+	public void rechazar(Promocion promocionSugerida) {
+		this.promosNoAdquiridas.add(promocionSugerida);
+	}
+
+	// Chequea si una promocion entra en su presupuesto y tiempo disponible
+	public boolean puedoComprar(Promocion promocionSugerida) {
+		return (promocionSugerida.getTiempoNecesario() <= this.tiempoDisponible
+				&& promocionSugerida.getPrecio() <= this.presupuesto);
 	}
 
 	@Override
@@ -54,16 +80,5 @@ public class Usuario {
 		usuarios = ("[" + this.nombre + ", " + Double.toString(this.presupuesto) + ", "
 				+ Double.toString(this.tiempoDisponible) + ", " + this.tipoPreferido + "]");
 		return usuarios;
-	}
-
-	public void adquirir(Promocion promocionSugerida) {
-		if(puedoComprar(promocionSugerida))
-			this.tiempoDisponible -= promocionSugerida.getTiempoNecesario();
-			this.presupuesto -= promocionSugerida.getPrecio();
-	}
-
-	public boolean puedoComprar(Promocion promocionSugerida) {
-		return (promocionSugerida.getTiempoNecesario() <= this.tiempoDisponible
-				&& promocionSugerida.getPrecio() <= this.presupuesto);
 	}
 }

@@ -8,17 +8,21 @@ public class PromocionAxB extends Promocion {
 		this.atraccionGratis = atraccion3;
 	}
 
+	// Getters
 	public String getAtraccionGratis() {
 		return atraccionGratis;
 	}
 
+	// Aniade al metodo heredado el tiempo de su atributo propio
 	@Override
 	public double calcularTiempoNecesario() {
 		return super.calcularTiempoNecesario() + this.buscarEnLaAtraccion(atraccionGratis, "tiempoDeRealizacion");
 	}
 
+	// Aniade al toString heredado mostrando los campos propios
 	@Override
 	public String toString() {
-		return super.toString() + "por " + this.getPrecio() + " monedas, y ademas se lleva " + this.atraccionGratis +" gratis.";
+		return super.toString() + "por " + this.getPrecio() + " monedas, y ademas se lleva " + this.atraccionGratis
+				+ " gratis.";
 	}
 }

@@ -10,13 +10,16 @@ public class App {
 		System.out.println();
 		System.out.println("********* GENERADOR *********");
 		System.out.println();
-		
-		generador.para("Eowyn");
-		
+
+		generador.para("Eowyn"); //
+
 		generador.mostrarPromosAptas();
 		generador.sugerirPromocion();
 		generador.aceptarPromocion();
-		
+
 		generador.mostrarPromosAdquiridas();
+
+		// generador al igual que con usuario debe interaccionar con atraccion
+		// generar array repite mucho codigo
 	}
 }
