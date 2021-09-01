@@ -1,22 +1,38 @@
 package objetosDeEntrada;
 
+import java.util.ArrayList;
+
 public class PromocionAxB extends Promocion {
 	private String atraccionGratis;
 
-	public PromocionAxB(Atraccion[] atracciones, String tipo, String atraccion1, String atraccion2, String atraccion3) {
+	public PromocionAxB(ArrayList<Atraccion> atracciones, String tipo, String atraccion1, String atraccion2,
+			String atraccion3) {
 		super(atracciones, tipo, atraccion1, atraccion2);
 		this.atraccionGratis = atraccion3;
 	}
 
 	// Getters
-	public String getAtraccionGratis() {
-		return atraccionGratis;
+	public Atraccion getAtraccionGratis() {
+		return atracciones.get(indiceAtraccion(atraccionGratis));
+	}
+
+	@Override
+	public void usarCupos() {
+		if (hayCupos()) {
+			super.usarCupos();
+			getAtraccionGratis().usarCupo();
+		}
+	}
+
+	@Override
+	public boolean hayCupos() {
+		return super.hayCupos() && getAtraccionGratis().getHayCupos();
 	}
 
 	// Aniade al metodo heredado el tiempo de su atributo propio
 	@Override
 	public double calcularTiempoNecesario() {
-		return super.calcularTiempoNecesario() + this.buscarEnLaAtraccion(atraccionGratis, "tiempoDeRealizacion");
+		return super.calcularTiempoNecesario() + atracciones.get(indiceAtraccion(atraccion1)).getTiempoDeRealizacion();
 	}
 
 	// Aniade al toString heredado mostrando los campos propios

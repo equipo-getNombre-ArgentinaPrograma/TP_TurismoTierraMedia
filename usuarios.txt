@@ -1,6 +1,5 @@
-5
-Eowyn,10,8,Aventura
-Gandalf,100,5,Paisaje
-Sam,36,8,Degustacion
-Galadriel,120,4.5,Paisaje
-Ricky,1000000,24,Paisaje
+Eowyn;10;8;Aventura
+Gandalf;100;5;Paisaje
+Sam;36;8;Degustacion
+Galadriel;120;4.5;Paisaje
+Ricky;1000000;24;Paisaje

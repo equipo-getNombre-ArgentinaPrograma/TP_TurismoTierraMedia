@@ -1,9 +1,11 @@
 package objetosDeEntrada;
 
+import java.util.ArrayList;
+
 public class PromocionPorcentual extends Promocion {
 	private double descuento;
 
-	public PromocionPorcentual(Atraccion[] atracciones, String tipo, String atraccion1, String atraccion2,
+	public PromocionPorcentual(ArrayList<Atraccion> atracciones, String tipo, String atraccion1, String atraccion2,
 			double descuento) {
 		super(atracciones, tipo, atraccion1, atraccion2);
 		this.descuento = descuento;
@@ -19,7 +21,8 @@ public class PromocionPorcentual extends Promocion {
 
 	@Override
 	public String toString() {
-		return super.toString() + "por " + this.getPrecio() + " monedas, gracias al descuento del "+ this.descuento+ "%.";
+		return super.toString() + "por " + this.getPrecio() + " monedas, gracias al descuento del " + this.descuento
+				+ "%.";
 	}
 
 	public double getDescuento() {

@@ -1,3 +1,0 @@
-2
-Paisaje,Minas Tirith,Abismo de Helm,Erebor
-Aventura,Moria,Mordor,Bosque Negro

@@ -1,15 +1,11 @@
 package objetosDeEntrada;
 
-import java.util.ArrayList;
-
 public class Atraccion {
-	private ArrayList<String[]> archivo;
 	private String nombre;
 	private double costoXvisita;
 	private double tiempoDeRealizacion;
 	private int cuposXdia;
 	private String tipoDeAtraccion;
-	private int indice = 0;
 
 	public Atraccion(String nombre, double costo, double tiempo, int cupos, String tipo) {
 		this.nombre = nombre;
@@ -40,23 +36,19 @@ public class Atraccion {
 		return tipoDeAtraccion;
 	}
 
-	public int getIndice() {
-		return indice;
-	}
-
-	public int getTamanio() {
-		return archivo.size();
+	public boolean getHayCupos() {
+		return hayCupos();
 	}
 
 	// UsarCupo() devuelve True si el cupo es usado y False si no hay mas cupos para
 	// usarse, ademas resta un cupo a la atraccion
-	public boolean usarCupo() {
-		boolean hayCupos = true;
-		if (this.cuposXdia == 0)
-			hayCupos = false;
-		else
-			this.cuposXdia--;
-		return hayCupos;
+	public void usarCupo() {
+		if (hayCupos())
+			cuposXdia--;
+	}
+	
+	public boolean hayCupos() {
+		return cuposXdia > 0;
 	}
 
 	@Override

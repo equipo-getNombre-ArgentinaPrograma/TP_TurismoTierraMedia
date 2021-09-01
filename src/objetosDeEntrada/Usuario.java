@@ -3,14 +3,13 @@ package objetosDeEntrada;
 import java.util.ArrayList;
 
 public class Usuario {
-	private ArrayList<String[]> archivo;
 	private ArrayList<Promocion> promosAdquiridas = new ArrayList<Promocion>();
 	private ArrayList<Promocion> promosNoAdquiridas = new ArrayList<Promocion>();
+
 	private String nombre;
 	private double presupuesto;
 	private double tiempoDisponible;
 	private String tipoPreferido;
-	private int indice = 0;
 
 	public Usuario(String nombre, double presupuesto, double tiempo, String tipo) {
 		this.nombre = nombre;
@@ -36,14 +35,6 @@ public class Usuario {
 		return tipoPreferido;
 	}
 
-	public int getIndice() {
-		return this.indice;
-	}
-
-	public int getTamanio() {
-		return this.archivo.size();
-	}
-
 	public ArrayList<Promocion> getPromosAdquiridas() {
 		return promosAdquiridas;
 	}
@@ -54,22 +45,25 @@ public class Usuario {
 
 	// Adquiere la promocion sumandola a la lista de promos adquiridas y resta
 	// tiempo y presupuesto
-	public void adquirir(Promocion promocionSugerida) {
-		if (puedoComprar(promocionSugerida)) {
+	public boolean adquirir(Promocion promocionSugerida) {
+		if (puedeComprar(promocionSugerida)) {
 			this.tiempoDisponible -= promocionSugerida.getTiempoNecesario();
 			this.presupuesto -= promocionSugerida.getPrecio();
 			this.promosAdquiridas.add(promocionSugerida);
+			return true;
 		}
+		return false;
 	}
 
 	// Rechaza la promocion sumandola a la lista de promos NO adquiridas para que no
 	// vuelva a ser sugerida
-	public void rechazar(Promocion promocionSugerida) {
+	public boolean rechazar(Promocion promocionSugerida) {
 		this.promosNoAdquiridas.add(promocionSugerida);
+		return true;
 	}
 
 	// Chequea si una promocion entra en su presupuesto y tiempo disponible
-	public boolean puedoComprar(Promocion promocionSugerida) {
+	public boolean puedeComprar(Promocion promocionSugerida) {
 		return (promocionSugerida.getTiempoNecesario() <= this.tiempoDisponible
 				&& promocionSugerida.getPrecio() <= this.presupuesto);
 	}

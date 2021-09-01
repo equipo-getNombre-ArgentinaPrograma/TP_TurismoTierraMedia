@@ -1,20 +1,16 @@
 package objetosDeEntrada;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
+import java.util.ArrayList;
 
 public abstract class Promocion implements Comparable<Promocion> {
-	protected Atraccion[] atracciones;
+	protected ArrayList<Atraccion> atracciones;
 	protected String atraccion1;
 	protected String atraccion2;
 	protected double precio;
 	protected String tipoDeAtraccion;
-	protected String nombreArchivo;
 	protected double tiempoNecesario;
 
-	NumberFormat nf = new DecimalFormat("##.###");
-
-	public Promocion(Atraccion[] atracciones, String tipo, String atraccion1, String atraccion2) {
+	public Promocion(ArrayList<Atraccion> atracciones, String tipo, String atraccion1, String atraccion2) {
 		this.atracciones = atracciones;
 		this.tipoDeAtraccion = tipo;
 		this.atraccion1 = atraccion1;
@@ -22,12 +18,12 @@ public abstract class Promocion implements Comparable<Promocion> {
 	}
 
 	// Getters
-	public String getAtraccion1() {
-		return atraccion1;
+	public Atraccion getAtraccion1() {
+		return atracciones.get(indiceAtraccion(atraccion1));
 	}
 
-	public String getAtraccion2() {
-		return atraccion2;
+	public Atraccion getAtraccion2() {
+		return atracciones.get(indiceAtraccion(atraccion2));
 	}
 
 	public double getPrecio() {
@@ -45,29 +41,36 @@ public abstract class Promocion implements Comparable<Promocion> {
 	// Suma los precios de las dos atracciones
 	public double calcularPrecio() {
 		this.precio = 0;
-		this.precio += this.buscarEnLaAtraccion(atraccion1, "costoXvisita");
-		this.precio += this.buscarEnLaAtraccion(atraccion2, "costoXvisita");
+		this.precio += getAtraccion1().getCostoXvisita();
+		this.precio += getAtraccion2().getCostoXvisita();
 		return precio;
 	}
 
 	// Suma los tiempos de las dos atracciones
 	public double calcularTiempoNecesario() {
 		this.tiempoNecesario = 0;
-		this.tiempoNecesario += this.buscarEnLaAtraccion(atraccion1, "tiempoDeRealizacion");
-		this.tiempoNecesario += this.buscarEnLaAtraccion(atraccion2, "tiempoDeRealizacion");
+		this.tiempoNecesario += getAtraccion1().getTiempoDeRealizacion();
+		this.tiempoNecesario += getAtraccion2().getTiempoDeRealizacion();
 		return tiempoNecesario;
 	}
 
-	// Devuelve el dato a buscar de la atraccion deseada
-	public double buscarEnLaAtraccion(String atraccion, String datoAbuscar) {
-		for (int i = 0; i < this.atracciones.length; i++) {
-			if (this.atracciones[i].getNombre().equals(atraccion))
-				if (datoAbuscar == "tiempoDeRealizacion")
-					return this.atracciones[i].getTiempoDeRealizacion();
-				else if (datoAbuscar == "costoXvisita")
-					return this.atracciones[i].getCostoXvisita();
+	public int indiceAtraccion(String atraccion) {
+		for (int i = 0; i < atracciones.size(); i++) {
+			if (atracciones.get(i).getNombre().equals(atraccion))
+				return i;
 		}
 		return -1;
+	}
+
+	public void usarCupos() {
+		if (hayCupos()) {
+			getAtraccion1().usarCupo();
+			getAtraccion2().usarCupo();
+		}
+	}
+
+	public boolean hayCupos() {
+		return getAtraccion1().getHayCupos() && getAtraccion2().getHayCupos();
 	}
 
 	@Override

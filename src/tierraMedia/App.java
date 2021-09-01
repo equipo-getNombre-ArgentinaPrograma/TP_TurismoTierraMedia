@@ -1,25 +1,17 @@
 package tierraMedia;
 
-import java.io.IOException;
-
 import generadores.*;
 
 public class App {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		GenerarPromocion generador = new GenerarPromocion();
-		System.out.println();
-		System.out.println("********* GENERADOR *********");
-		System.out.println();
 
-		generador.para("Eowyn"); //
-
-		generador.mostrarPromosAptas();
+		System.out.printf("********* GENERADOR *********\n\n");
+		
+		generador.para("Sam");
 		generador.sugerirPromocion();
-		generador.aceptarPromocion();
-
-		generador.mostrarPromosAdquiridas();
-
-		// generador al igual que con usuario debe interaccionar con atraccion
-		// generar array repite mucho codigo
+		
+		// interactuar con el usuario mediante consola
+		// generar el itinerario a partir de las promociones adquiridas y exportarlo a un archivo
 	}
 }
