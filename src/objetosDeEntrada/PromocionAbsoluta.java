@@ -10,16 +10,10 @@ public class PromocionAbsoluta extends Promocion {
 		this.precio = precio;
 	}
 
-	// Geters
+	// Getters
 	@Override
 	public double getPrecio() {
 		return precio;
-	}
-
-	// Aniade al toString heredado mostrando los campos propios
-	@Override
-	public String toString() {
-		return super.toString() + "por " + this.getPrecio() + " monedas.";
 	}
 
 }

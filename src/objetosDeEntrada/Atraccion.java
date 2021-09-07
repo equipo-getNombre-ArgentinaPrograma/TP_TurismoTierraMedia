@@ -1,15 +1,15 @@
 package objetosDeEntrada;
 
-public class Atraccion {
+public class Atraccion implements PuedeSerComprada {
 	private String nombre;
-	private double costoXvisita;
+	private double precio;
 	private double tiempoDeRealizacion;
 	private int cuposXdia;
 	private String tipoDeAtraccion;
 
 	public Atraccion(String nombre, double costo, double tiempo, int cupos, String tipo) {
 		this.nombre = nombre;
-		this.costoXvisita = costo;
+		this.precio = costo;
 		this.tiempoDeRealizacion = tiempo;
 		this.cuposXdia = cupos;
 		this.tipoDeAtraccion = tipo;
@@ -20,8 +20,8 @@ public class Atraccion {
 		return nombre;
 	}
 
-	public double getCostoXvisita() {
-		return costoXvisita;
+	public double getPrecio() {
+		return precio;
 	}
 
 	public double getTiempoDeRealizacion() {
@@ -42,21 +42,27 @@ public class Atraccion {
 
 	// UsarCupo() devuelve True si el cupo es usado y False si no hay mas cupos para
 	// usarse, ademas resta un cupo a la atraccion
-	public void usarCupo() {
+	public void usarCupos() {
 		if (hayCupos())
 			cuposXdia--;
 	}
-	
+
 	public boolean hayCupos() {
 		return cuposXdia > 0;
 	}
 
 	@Override
 	public String toString() {
-		String atraccion;
-		atraccion = ("[" + this.nombre + ", " + Double.toString(this.costoXvisita) + ", "
-				+ Double.toString(this.tiempoDeRealizacion) + ", " + Integer.toString(this.cuposXdia) + ", "
-				+ this.tipoDeAtraccion + "]");
-		return atraccion;
+		return "\n*Atraccion " + getTipoDeAtraccion() + ":\nNombre: " + getNombre() + "\nPrecio: " + getPrecio()
+				+ " monedas.\nDuracion: " + getTiempoDeRealizacion() + " horas.";
+
+	}
+
+	@Override
+	public int compareTo(PuedeSerComprada otro) {
+		int comparacionPorPrecio = Double.compare(otro.getPrecio(), this.getPrecio());
+		if (comparacionPorPrecio != 0)
+			return comparacionPorPrecio;
+		return Double.compare(otro.getTiempoDeRealizacion(), this.getTiempoDeRealizacion());
 	}
 }

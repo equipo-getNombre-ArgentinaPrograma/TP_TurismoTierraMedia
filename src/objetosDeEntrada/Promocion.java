@@ -2,10 +2,10 @@ package objetosDeEntrada;
 
 import java.util.ArrayList;
 
-public abstract class Promocion implements Comparable<Promocion> {
+public abstract class Promocion implements PuedeSerComprada{
 	protected ArrayList<Atraccion> atracciones;
-	protected String atraccion1;
-	protected String atraccion2;
+	protected Atraccion atraccion1;
+	protected Atraccion atraccion2;
 	protected double precio;
 	protected String tipoDeAtraccion;
 	protected double tiempoNecesario;
@@ -13,17 +13,17 @@ public abstract class Promocion implements Comparable<Promocion> {
 	public Promocion(ArrayList<Atraccion> atracciones, String tipo, String atraccion1, String atraccion2) {
 		this.atracciones = atracciones;
 		this.tipoDeAtraccion = tipo;
-		this.atraccion1 = atraccion1;
-		this.atraccion2 = atraccion2;
+		this.atraccion1 = atracciones.get(buscarIndiceAtraccion(atraccion1));
+		this.atraccion2 = atracciones.get(buscarIndiceAtraccion(atraccion2));
 	}
 
 	// Getters
 	public Atraccion getAtraccion1() {
-		return atracciones.get(buscarIndiceAtraccion(atraccion1));
+		return atraccion1;
 	}
 
 	public Atraccion getAtraccion2() {
-		return atracciones.get(buscarIndiceAtraccion(atraccion2));
+		return atraccion2;
 	}
 
 	public double getPrecio() {
@@ -34,15 +34,15 @@ public abstract class Promocion implements Comparable<Promocion> {
 		return tipoDeAtraccion;
 	}
 
-	public double getTiempoNecesario() {
+	public double getTiempoDeRealizacion() {
 		return calcularTiempoNecesario();
 	}
 
 	// Suma los precios de las dos atracciones
 	public double calcularPrecio() {
 		this.precio = 0;
-		this.precio += getAtraccion1().getCostoXvisita();
-		this.precio += getAtraccion2().getCostoXvisita();
+		this.precio += getAtraccion1().getPrecio();
+		this.precio += getAtraccion2().getPrecio();
 		return precio;
 	}
 
@@ -64,8 +64,8 @@ public abstract class Promocion implements Comparable<Promocion> {
 
 	public void usarCupos() {
 		if (hayCupos()) {
-			getAtraccion1().usarCupo();
-			getAtraccion2().usarCupo();
+			getAtraccion1().usarCupos();
+			getAtraccion2().usarCupos();
 		}
 	}
 
@@ -75,18 +75,16 @@ public abstract class Promocion implements Comparable<Promocion> {
 
 	@Override
 	public String toString() {
-		String atraccion;
-		atraccion = ("*Promo " + this.tipoDeAtraccion + ": " + this.atraccion1 + " y " + this.atraccion2 + " de "
-				+ this.getTiempoNecesario() + " horas ");
-		return atraccion;
+		return "\n*Promo " + getTipoDeAtraccion() + ":\nAtracciones incluidas: " + atraccion1.getNombre() + " y " + atraccion2.getNombre() + ".\nPrecio: "
+				+ getPrecio() + " monedas.\nDuracion: " + getTiempoDeRealizacion() + " horas.";
 	}
 
 	// Compara por precio y por tiempo
 	@Override
-	public int compareTo(Promocion otro) {
+	public int compareTo(PuedeSerComprada otro) {
 		int comparacionPorPrecio = Double.compare(otro.getPrecio(), this.getPrecio());
 		if (comparacionPorPrecio != 0)
 			return comparacionPorPrecio;
-		return Double.compare(otro.getTiempoNecesario(), this.getTiempoNecesario());
+		return Double.compare(otro.getTiempoDeRealizacion(), this.getTiempoDeRealizacion());
 	}
 }

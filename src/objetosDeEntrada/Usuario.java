@@ -3,8 +3,8 @@ package objetosDeEntrada;
 import java.util.ArrayList;
 
 public class Usuario {
-	private ArrayList<Promocion> promosAdquiridas = new ArrayList<Promocion>();
-	private ArrayList<Promocion> promosNoAdquiridas = new ArrayList<Promocion>();
+	private ArrayList<PuedeSerComprada> sugerenciasAdquiridas = new ArrayList<PuedeSerComprada>();
+	private ArrayList<PuedeSerComprada> sugerenciasNoAdquiridas = new ArrayList<PuedeSerComprada>();
 
 	private String nombre;
 	private double presupuesto;
@@ -35,21 +35,21 @@ public class Usuario {
 		return tipoPreferido;
 	}
 
-	public ArrayList<Promocion> getPromosAdquiridas() {
-		return promosAdquiridas;
+	public ArrayList<PuedeSerComprada> getSugerenciasAdquiridas() {
+		return sugerenciasAdquiridas;
 	}
 
-	public ArrayList<Promocion> getPromosNoAdquiridas() {
-		return promosNoAdquiridas;
+	public ArrayList<PuedeSerComprada> getSugerenciasNoAdquiridas() {
+		return sugerenciasNoAdquiridas;
 	}
 
 	// Adquiere la promocion sumandola a la lista de promos adquiridas y resta
 	// tiempo y presupuesto
-	public boolean adquirir(Promocion promocionSugerida) {
+	public boolean adquirir(PuedeSerComprada promocionSugerida) {
 		if (puedeComprar(promocionSugerida)) {
-			this.tiempoDisponible -= promocionSugerida.getTiempoNecesario();
+			this.tiempoDisponible -= promocionSugerida.getTiempoDeRealizacion();
 			this.presupuesto -= promocionSugerida.getPrecio();
-			this.promosAdquiridas.add(promocionSugerida);
+			this.sugerenciasAdquiridas.add(promocionSugerida);
 			return true;
 		}
 		return false;
@@ -57,22 +57,20 @@ public class Usuario {
 
 	// Rechaza la promocion sumandola a la lista de promos NO adquiridas para que no
 	// vuelva a ser sugerida
-	public boolean rechazar(Promocion promocionSugerida) {
-		this.promosNoAdquiridas.add(promocionSugerida);
+	public boolean rechazar(PuedeSerComprada sugerencia) {
+		this.sugerenciasNoAdquiridas.add(sugerencia);
 		return true;
 	}
 
 	// Chequea si una promocion entra en su presupuesto y tiempo disponible
-	public boolean puedeComprar(Promocion promocionSugerida) {
-		return (promocionSugerida.getTiempoNecesario() <= this.tiempoDisponible
-				&& promocionSugerida.getPrecio() <= this.presupuesto);
+	public boolean puedeComprar(PuedeSerComprada sugerencia) {
+		return (sugerencia.getTiempoDeRealizacion() <= this.tiempoDisponible
+				&& sugerencia.getPrecio() <= this.presupuesto);
 	}
 
 	@Override
 	public String toString() {
-		String usuarios;
-		usuarios = ("[" + this.nombre + ", " + Double.toString(this.presupuesto) + ", "
-				+ Double.toString(this.tiempoDisponible) + ", " + this.tipoPreferido + "]");
-		return usuarios;
+		return "[" + getNombre() + ", " + getPresupuesto() + ", " + getTiempoDisponible() + ", " + getTipoPreferido()
+				+ "]";
 	}
 }

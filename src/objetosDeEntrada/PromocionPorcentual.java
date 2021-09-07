@@ -2,6 +2,8 @@ package objetosDeEntrada;
 
 import java.util.ArrayList;
 
+import generadores.GeneradorListas;
+
 public class PromocionPorcentual extends Promocion {
 	private double descuento;
 
@@ -11,21 +13,21 @@ public class PromocionPorcentual extends Promocion {
 		this.descuento = descuento;
 	}
 
+	// Getters
+	public double getDescuento() {
+		return descuento;
+	}
+
 	@Override
 	public double calcularPrecio() {
 		// no se pq funciona, para calcular el precio la clase necesita
 		// un array de atracciones y no se cuando lo obtiene
-		this.precio = super.calcularPrecio() * (1 - (this.descuento / 100));
+		this.precio = super.calcularPrecio() * (1 - (getDescuento() / 100));
 		return this.precio = (double) Math.round(this.precio * 10d) / 10d;
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + "por " + this.getPrecio() + " monedas, gracias al descuento del " + this.descuento
-				+ "%.";
-	}
-
-	public double getDescuento() {
-		return descuento;
+		return super.toString() + " Gracias al descuento del " + getDescuento() + "%.";
 	}
 }
