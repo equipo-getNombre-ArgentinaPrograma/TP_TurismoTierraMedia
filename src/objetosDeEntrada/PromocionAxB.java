@@ -13,7 +13,7 @@ public class PromocionAxB extends Promocion {
 
 	// Getters
 	public Atraccion getAtraccionGratis() {
-		return atracciones.get(indiceAtraccion(atraccionGratis));
+		return atracciones.get(buscarIndiceAtraccion(atraccionGratis));
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class PromocionAxB extends Promocion {
 	// Aniade al metodo heredado el tiempo de su atributo propio
 	@Override
 	public double calcularTiempoNecesario() {
-		return super.calcularTiempoNecesario() + atracciones.get(indiceAtraccion(atraccion1)).getTiempoDeRealizacion();
+		return super.calcularTiempoNecesario() + atracciones.get(buscarIndiceAtraccion(atraccion1)).getTiempoDeRealizacion();
 	}
 
 	// Aniade al toString heredado mostrando los campos propios

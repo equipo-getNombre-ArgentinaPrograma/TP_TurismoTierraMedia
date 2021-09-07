@@ -19,11 +19,11 @@ public abstract class Promocion implements Comparable<Promocion> {
 
 	// Getters
 	public Atraccion getAtraccion1() {
-		return atracciones.get(indiceAtraccion(atraccion1));
+		return atracciones.get(buscarIndiceAtraccion(atraccion1));
 	}
 
 	public Atraccion getAtraccion2() {
-		return atracciones.get(indiceAtraccion(atraccion2));
+		return atracciones.get(buscarIndiceAtraccion(atraccion2));
 	}
 
 	public double getPrecio() {
@@ -54,7 +54,7 @@ public abstract class Promocion implements Comparable<Promocion> {
 		return tiempoNecesario;
 	}
 
-	public int indiceAtraccion(String atraccion) {
+	public int buscarIndiceAtraccion(String atraccion) {
 		for (int i = 0; i < atracciones.size(); i++) {
 			if (atracciones.get(i).getNombre().equals(atraccion))
 				return i;
@@ -84,9 +84,9 @@ public abstract class Promocion implements Comparable<Promocion> {
 	// Compara por precio y por tiempo
 	@Override
 	public int compareTo(Promocion otro) {
-		int comparacionPorPrecio = Double.compare(otro.getPrecio(), this.precio);
+		int comparacionPorPrecio = Double.compare(otro.getPrecio(), this.getPrecio());
 		if (comparacionPorPrecio != 0)
 			return comparacionPorPrecio;
-		return Double.compare(this.tiempoNecesario, otro.getTiempoNecesario());
+		return Double.compare(otro.getTiempoNecesario(), this.getTiempoNecesario());
 	}
 }
