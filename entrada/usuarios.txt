@@ -1,0 +1,4 @@
+Eowyn;100;80;Aventura
+Gandalf;100;5;Paisaje
+Sam;36;8;Degustacion
+Galadriel;120;4.5;Paisaje

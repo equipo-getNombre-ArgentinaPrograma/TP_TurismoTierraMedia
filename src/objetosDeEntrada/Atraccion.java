@@ -1,6 +1,6 @@
 package objetosDeEntrada;
 
-public class Atraccion implements PuedeSerComprada {
+public class Atraccion implements Adquirible {
 	private String nombre;
 	private double precio;
 	private double tiempoDeRealizacion;
@@ -51,18 +51,18 @@ public class Atraccion implements PuedeSerComprada {
 		return cuposXdia > 0;
 	}
 
-	@Override
-	public String toString() {
-		return "\n*Atraccion " + getTipoDeAtraccion() + ":\nNombre: " + getNombre() + "\nPrecio: " + getPrecio()
-				+ " monedas.\nDuracion: " + getTiempoDeRealizacion() + " horas.";
-
+	public boolean esPromocion() {
+		return false;
 	}
 
 	@Override
-	public int compareTo(PuedeSerComprada otro) {
-		int comparacionPorPrecio = Double.compare(otro.getPrecio(), this.getPrecio());
-		if (comparacionPorPrecio != 0)
-			return comparacionPorPrecio;
-		return Double.compare(otro.getTiempoDeRealizacion(), this.getTiempoDeRealizacion());
+	public String toString() {
+		return "Atraccion " + getTipoDeAtraccion() + ";Nombre: " + getNombre() + ";Duracion: "
+				+ getTiempoDeRealizacion() + " hora/s;Precio: " + getPrecio() + " moneda/s";
+	}
+	
+	public void imprimirEnPantalla() {
+		System.out.println("Atraccion " + getTipoDeAtraccion() + ".\nNombre: " + getNombre() + ".\nDuracion: "
+				+ getTiempoDeRealizacion() + " hora/s.\nPrecio: " + getPrecio() + " moneda/s.");
 	}
 }

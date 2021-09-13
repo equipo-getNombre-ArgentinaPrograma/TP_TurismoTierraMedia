@@ -1,6 +1,6 @@
 package objetosDeEntrada;
 
-public interface PuedeSerComprada extends Comparable<PuedeSerComprada>{
+public interface Adquirible{
 
 	public double getPrecio();
 
@@ -12,7 +12,7 @@ public interface PuedeSerComprada extends Comparable<PuedeSerComprada>{
 
 	public boolean hayCupos();
 
-	public int compareTo(PuedeSerComprada otro);
+	public boolean esPromocion();
 	
-	
+	public void imprimirEnPantalla();
 }

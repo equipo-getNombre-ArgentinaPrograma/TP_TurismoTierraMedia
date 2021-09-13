@@ -3,17 +3,21 @@ package objetosDeEntrada;
 import java.util.ArrayList;
 
 public class PromocionAxB extends Promocion {
-	private Atraccion atraccionGratis;
 
 	public PromocionAxB(ArrayList<Atraccion> atracciones, String tipo, String atraccion1, String atraccion2,
 			String atraccion3) {
 		super(atracciones, tipo, atraccion1, atraccion2);
-		this.atraccionGratis = atracciones.get(buscarIndiceAtraccion(atraccion3));
+		this.atraccionesIncluidas.add(setAtraccionGratis(atraccion3));
 	}
 
-	// Getters
+	// Getter
 	public Atraccion getAtraccionGratis() {
-		return atraccionGratis;
+		return atraccionesIncluidas.get(2);
+	}
+
+	// Setter
+	private Atraccion setAtraccionGratis(String atraccion) {
+		return atracciones.get(buscarIndiceAtraccion(atraccion));
 	}
 
 	@Override
@@ -29,16 +33,21 @@ public class PromocionAxB extends Promocion {
 		return super.hayCupos() && getAtraccionGratis().getHayCupos();
 	}
 
-	// Aniade al metodo heredado el tiempo de su atributo propio
+	// Agrega al metodo heredado el tiempo de su atributo propio
 	@Override
-	public double calcularTiempoNecesario() {
+	protected double calcularTiempoNecesario() {
 		return super.calcularTiempoNecesario() + getAtraccionGratis().getTiempoDeRealizacion();
 	}
 
-	// Aniade al toString heredado mostrando los campos propios
+	// Agrega los campos propios al toString heredado
 	@Override
 	public String toString() {
-		return super.toString() + "\nAdemas se lleva " + this.atraccionGratis.getNombre()
-				+ " de regalo.";
+		return super.toString() + ";Promocion de regalo: " + getAtraccionGratis().getNombre();
+	}
+
+	@Override
+	public void imprimirEnPantalla() {
+		super.imprimirEnPantalla();
+		System.out.println("Promocion de regalo: " + getAtraccionGratis().getNombre());
 	}
 }

@@ -1,4 +1,4 @@
-package lecturaYescritura;
+package lectorYescritor;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,7 +11,7 @@ public class LectorDeArchivos {
 		ArrayList<String[]> promos = new ArrayList<String[]>();
 		Scanner sc = null;
 		try {
-			sc = new Scanner(new File(archivo + ".txt"));
+			sc = new Scanner(new File("./entrada/" + archivo + ".txt"));
 			while (sc.hasNext())
 				promos.add(sc.nextLine().split(";"));
 		} catch (FileNotFoundException e) {
