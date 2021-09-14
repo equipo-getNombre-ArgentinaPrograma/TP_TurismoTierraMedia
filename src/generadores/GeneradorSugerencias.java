@@ -10,7 +10,7 @@ import java.util.PriorityQueue;
 
 import objetosDeEntrada.*;
 
-public class GenerarSugerencias {
+public class GeneradorSugerencias {
 	Usuario usuario;
 	private ArrayList<Promocion> promos;
 	private ArrayList<Atraccion> atracciones;
@@ -20,9 +20,9 @@ public class GenerarSugerencias {
 	private Integer key;
 
 	// Genera las listas con los datos leidos del archivo
-	public GenerarSugerencias() {
-		this.promos = GeneradorListas.dePromos();
-		this.atracciones = GeneradorListas.deAtracciones();
+	public GeneradorSugerencias() {
+		this.atracciones = GenerarLista.deAtracciones();
+		this.promos = GenerarLista.dePromos(atracciones);
 	}
 
 	// Devuelve el objeto usuario al cual esta ligado el sistema
@@ -84,7 +84,7 @@ public class GenerarSugerencias {
 	public void aceptarPromocion() {
 		if (getUsuario().adquirir(sugerencia)) {
 			System.out.println("Adquiriste la promocion con exito.");
-			sugerencia.usarCupos();
+			sugerencia.usarCupo();
 		}
 	}
 

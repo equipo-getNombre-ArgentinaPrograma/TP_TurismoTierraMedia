@@ -1,30 +1,32 @@
 package objetosDeSalida;
 
+import java.util.ArrayList;
+
 import objetosDeEntrada.Adquirible;
 import objetosDeEntrada.Usuario;
 
 public class Itinerario {
 	private Usuario user;
-	private double dineroGastado;
-	private double horasNecesarias;
 
 	public Itinerario(Usuario user) {
 		this.user = user;
-		this.dineroGastado = calcularDineroGastado();
-		this.horasNecesarias = calcularHorasNecesarias();
 	}
 
 	// Getters
 	public Usuario getUser() {
 		return user;
 	}
-
-	public double getDineroGastado() {
-		return dineroGastado;
+	
+	public ArrayList<Adquirible> getSugerenciasAdquiridas(){
+		return user.getSugerenciasAdquiridas();
 	}
 
-	public double getHorasNecesarias() {
-		return horasNecesarias;
+	public double getDineroGastado() {
+		return calcularDineroGastado();
+	}
+
+	public double getTiempoNecesario() {
+		return calcularTiempoNecesario();
 	}
 
 	// Calculan los atributos
@@ -35,7 +37,7 @@ public class Itinerario {
 		return sum;
 	}
 
-	private double calcularHorasNecesarias() {
+	private double calcularTiempoNecesario() {
 		double sum = 0;
 		for (Adquirible s : getUser().getSugerenciasAdquiridas())
 			sum += s.getTiempoDeRealizacion();

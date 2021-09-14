@@ -1,6 +1,6 @@
 package objetosDeEntrada;
 
-public interface Adquirible{
+public interface Adquirible {
 
 	public double getPrecio();
 
@@ -8,11 +8,11 @@ public interface Adquirible{
 
 	public String getTipoDeAtraccion();
 
-	public void usarCupos();
+	public boolean usarCupo();
 
 	public boolean hayCupos();
 
 	public boolean esPromocion();
-	
+
 	public void imprimirEnPantalla();
 }

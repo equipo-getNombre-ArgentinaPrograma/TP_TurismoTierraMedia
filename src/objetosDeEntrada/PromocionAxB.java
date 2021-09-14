@@ -21,11 +21,13 @@ public class PromocionAxB extends Promocion {
 	}
 
 	@Override
-	public void usarCupos() {
+	public boolean usarCupo() {
 		if (hayCupos()) {
-			super.usarCupos();
-			getAtraccionGratis().usarCupos();
+			super.usarCupo();
+			getAtraccionGratis().usarCupo();
+			return true;
 		}
+		return false;
 	}
 
 	@Override

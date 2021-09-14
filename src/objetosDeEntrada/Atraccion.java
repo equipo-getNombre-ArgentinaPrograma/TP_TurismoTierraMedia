@@ -42,9 +42,12 @@ public class Atraccion implements Adquirible {
 
 	// UsarCupo() devuelve True si el cupo es usado y False si no hay mas cupos para
 	// usarse, ademas resta un cupo a la atraccion
-	public void usarCupos() {
-		if (hayCupos())
+	public boolean usarCupo() {
+		if (hayCupos()) {
 			cuposXdia--;
+			return true;
+		}
+		return false;
 	}
 
 	public boolean hayCupos() {
@@ -60,7 +63,17 @@ public class Atraccion implements Adquirible {
 		return "Atraccion " + getTipoDeAtraccion() + ";Nombre: " + getNombre() + ";Duracion: "
 				+ getTiempoDeRealizacion() + " hora/s;Precio: " + getPrecio() + " moneda/s";
 	}
-	
+
+	@Override
+	public boolean equals(Object object) {
+		if (object instanceof Atraccion) {
+			String otroNombre = ((Atraccion) object).getNombre();
+			if (this.getNombre().equals(otroNombre))
+				return true;
+		}
+		return false;
+	}
+
 	public void imprimirEnPantalla() {
 		System.out.println("Atraccion " + getTipoDeAtraccion() + ".\nNombre: " + getNombre() + ".\nDuracion: "
 				+ getTiempoDeRealizacion() + " hora/s.\nPrecio: " + getPrecio() + " moneda/s.");

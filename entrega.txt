@@ -1,0 +1,12 @@
+se entrega:	-github
+		-diagrama de clases
+		-.zip con el programa
+		-pruebas unitarias
+		-video(sin explicar codigo)
+
+falta:		-pruebas unitarias
+
+
+to-do:		-actualizar github
+		-capturas a los diagramas
+		-video

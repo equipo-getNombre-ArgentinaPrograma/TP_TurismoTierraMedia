@@ -12,7 +12,7 @@ import objetosDeEntrada.*;
 import objetosDeSalida.Itinerario;
 
 public class Interfaz {
-	private static GenerarSugerencias generador;
+	private static GeneradorSugerencias generador;
 	private static Scanner scanner;
 	private static Adquirible sugerencia;
 
@@ -23,11 +23,11 @@ public class Interfaz {
 	private static String[] expectedReject = new String[] { "rechazar", "r", "2", "no", "n" };
 
 	public static void main(String[] args) throws IOException {
-		generador = new GenerarSugerencias();
+		generador = new GeneradorSugerencias();
 		scanner = new Scanner(System.in);
 		ArrayList<Itinerario> itinerarios = new ArrayList<Itinerario>();
 
-		Iterator<Usuario> iterador = GeneradorListas.deUsuarios().iterator();
+		Iterator<Usuario> iterador = GenerarLista.deUsuarios().iterator();
 		Itinerario it;
 		Usuario user;
 		// Se llama a la funcion para que comience la interaccion
@@ -38,7 +38,7 @@ public class Interfaz {
 			itinerarios.add(it);
 			System.out.println("--Usted tuvo " + user.getSugerenciasAdquiridas().size()
 					+ " adquisicion/es, debera gastar " + it.getDineroGastado() + " moneda/s y requerira de "
-					+ it.getHorasNecesarias() + " hora/s para completar su recorrido.\n");
+					+ it.getTiempoNecesario() + " hora/s para completar su recorrido.\n");
 		}
 		System.out.println("No hay mas usuarios, quiere imprimir el itinerario de cada uno?(y/n): $ ");
 		if (entradaUsuario(expectedYes, expectedNo).equals("si")) {

@@ -17,11 +17,11 @@ public class EscritorDeArchivos {
 			PrintWriter salida = new PrintWriter(new FileWriter("./salida/" + it.getUser().getNombre() + ".csv"));
 			salida.println("Usuario:;" + it.getUser().getNombre());
 			// Se imprimen las sugerencias adquiridas
-			for (Adquirible ad : it.getUser().getSugerenciasAdquiridas())
+			for (Adquirible ad : it.getSugerenciasAdquiridas())
 				salida.println(ad.toString());
 			// Se imprimen los demas datos pedidos
 			salida.println("Total a pagar:;" + it.getDineroGastado());
-			salida.println("Horas Necesarias:;" + it.getHorasNecesarias());
+			salida.println("Horas Necesarias:;" + it.getTiempoNecesario());
 
 			salida.close();
 		}

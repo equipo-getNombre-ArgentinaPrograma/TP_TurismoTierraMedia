@@ -7,11 +7,11 @@ import java.util.Scanner;
 
 public class LectorDeArchivos {
 
-	public static ArrayList<String[]> get(String archivo) {
+	public static ArrayList<String[]> get(String carpeta, String archivo) {
 		ArrayList<String[]> promos = new ArrayList<String[]>();
 		Scanner sc = null;
 		try {
-			sc = new Scanner(new File("./entrada/" + archivo + ".txt"));
+			sc = new Scanner(new File("./" + carpeta + "/" + archivo + ".csv"));
 			while (sc.hasNext())
 				promos.add(sc.nextLine().split(";"));
 		} catch (FileNotFoundException e) {

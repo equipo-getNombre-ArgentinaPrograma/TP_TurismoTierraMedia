@@ -12,9 +12,9 @@ public abstract class Promocion implements Adquirible {
 	public Promocion(ArrayList<Atraccion> atracciones, String tipo, String atraccion1, String atraccion2) {
 		this.atracciones = atracciones;
 		this.tipoDeAtraccion = tipo;
+		atraccionesIncluidas = new ArrayList<Atraccion>();
 		this.atraccionesIncluidas.add(setAtraccion(atraccion1));
 		this.atraccionesIncluidas.add(setAtraccion(atraccion2));
-		;
 	}
 
 	// Getters
@@ -26,6 +26,9 @@ public abstract class Promocion implements Adquirible {
 		return atraccionesIncluidas.get(1);
 	}
 
+	public ArrayList<Atraccion> getAtraccionesIncluidas() {
+		return atraccionesIncluidas;
+	}
 	public double getPrecio() {
 		return calcularPrecio();
 	}
@@ -67,11 +70,13 @@ public abstract class Promocion implements Adquirible {
 		return -1;
 	}
 
-	public void usarCupos() {
+	public boolean usarCupo() {
 		if (hayCupos()) {
-			getAtraccion1().usarCupos();
-			getAtraccion2().usarCupos();
+			getAtraccion1().usarCupo();
+			getAtraccion2().usarCupo();
+			return true;
 		}
+		return false;
 	}
 
 	public boolean hayCupos() {

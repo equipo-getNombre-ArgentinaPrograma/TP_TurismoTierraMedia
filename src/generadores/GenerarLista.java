@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import lectorYescritor.LectorDeArchivos;
 import objetosDeEntrada.*;
 
-public class GeneradorListas {
+public class GenerarLista {
 	// El lector devuelve un array de strings, que son los atributos para construir
 	// el objeto que se agrega a la lista
 
@@ -14,7 +14,7 @@ public class GeneradorListas {
 	// armarse.
 	public static ArrayList<Atraccion> deAtracciones() {
 		ArrayList<Atraccion> atracciones = new ArrayList<Atraccion>();
-		for (String[] tmp : LectorDeArchivos.get("atracciones")) {
+		for (String[] tmp : LectorDeArchivos.get("entrada","atracciones")) {
 			try {
 				atracciones.add(new Atraccion(tmp[0], Double.parseDouble(tmp[1]), Double.parseDouble(tmp[2]),
 						Integer.parseInt(tmp[3]), tmp[4]));
@@ -31,7 +31,7 @@ public class GeneradorListas {
 	// lista
 	public static ArrayList<Usuario> deUsuarios() {
 		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
-		for (String[] tmp : LectorDeArchivos.get("usuarios")) {
+		for (String[] tmp : LectorDeArchivos.get("entrada","usuarios")) {
 			try {
 				usuarios.add(new Usuario(tmp[0], Double.parseDouble(tmp[1]), Double.parseDouble(tmp[2]), (tmp[3])));
 			} catch (NumberFormatException e) {
@@ -44,11 +44,10 @@ public class GeneradorListas {
 	}
 
 	// Lo mismo sucede con las promociones
-	public static ArrayList<Promocion> dePromos() {
+	public static ArrayList<Promocion> dePromos(ArrayList<Atraccion> atracciones) {
 		ArrayList<Promocion> promos = new ArrayList<Promocion>();
-		ArrayList<Atraccion> atracciones = GeneradorListas.deAtracciones();
 		Promocion promo = null;
-		for (String[] tmp : LectorDeArchivos.get("promociones")) {
+		for (String[] tmp : LectorDeArchivos.get("entrada","promociones")) {
 			try {
 				if (tmp[0].equals("Porcentual"))
 					promo = new PromocionPorcentual(atracciones, tmp[1], tmp[2], tmp[3], Double.parseDouble(tmp[4]));
