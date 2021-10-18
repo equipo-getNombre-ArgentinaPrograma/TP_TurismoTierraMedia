@@ -1,0 +1,4 @@
+User;Sam
+Promocion Degustacion;Atracciones: La Comarca, Lothlorien;Duracion: 7.5 hora/s;Precio: 30.4 moneda/s;Descuento: 20.0%
+Total a pagar;30.4
+Horas Necesarias;7.5

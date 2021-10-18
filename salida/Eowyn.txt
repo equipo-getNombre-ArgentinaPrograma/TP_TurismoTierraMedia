@@ -1,0 +1,4 @@
+User;Eowyn
+Promocion Aventura;Atracciones: Moria, Bosque Negro;Duracion: 6.0 hora/s;Precio: 10.0 moneda/s
+Total a pagar;10.0
+Horas Necesarias;6.0

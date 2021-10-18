@@ -1,0 +1,4 @@
+User;Gandalf
+Promocion Paisaje;Atracciones: Minas Tirith, Abismo de Helm;Duracion: 4.5 hora/s;Precio: 7.0 moneda/s
+Total a pagar;7.0
+Horas Necesarias;4.5
