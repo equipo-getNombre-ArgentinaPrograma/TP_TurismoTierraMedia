@@ -2,6 +2,7 @@ package app;
 
 import java.util.Scanner;
 
+import dao.AttractionDAO;
 import fileManagement.Writer;
 import generator.*;
 import inObject.*;
@@ -48,6 +49,7 @@ public class Interface {
 		} else
 			System.out.println("Archivos no creados.");
 		System.out.println("Fin del programa.");
+		AttractionDAO.restoreQuota();
 	}
 
 	// Mientras haya promociones y el usuario quiera, se sugeriran promociones

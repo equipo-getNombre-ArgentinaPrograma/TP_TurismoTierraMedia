@@ -12,6 +12,8 @@ public class ListGenerator {
 	// Si el archivo de atracciones presenta un error en la lectura, se dara por
 	// terminada la ejecucion del programa ya que las promociones no van a poder
 	// armarse.
+
+/*
 	public static ArrayList<Attraction> ofAttractions() {
 		ArrayList<Attraction> attractions = new ArrayList<Attraction>();
 		for (String[] tmp : Reader.get("entrada", "atracciones")) {
@@ -26,7 +28,8 @@ public class ListGenerator {
 		}
 		return attractions;
 	}
-
+*/
+	
 	// En cambio, si un usuario no puede leerse simplemente no se agregara a la
 	// lista
 	public static ArrayList<User> ofUsers() {

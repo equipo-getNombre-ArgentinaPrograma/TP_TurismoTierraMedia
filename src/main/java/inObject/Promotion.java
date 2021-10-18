@@ -73,6 +73,7 @@ public abstract class Promotion implements Acquirable {
 
 	public boolean useQuota() {
 		if (!isFull()) {
+			System.out.println("USO CUOTA\n\n ");
 			getAttraction1().useQuota();
 			getAttraction2().useQuota();
 			return true;
@@ -81,7 +82,7 @@ public abstract class Promotion implements Acquirable {
 	}
 
 	public boolean isFull() {
-		return getAttraction1().isFull() && getAttraction2().isFull();
+		return getAttraction1().isFull() || getAttraction2().isFull();
 	}
 
 	public boolean isPromotion() {

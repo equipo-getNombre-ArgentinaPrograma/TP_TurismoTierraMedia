@@ -1,13 +1,17 @@
 package inObject;
 
+import dao.AttractionDAO;
+
 public class Attraction implements Acquirable {
+	private int id;
 	private String name;
 	private double price;
 	private double completionTime;
 	private int quotaByDay;
 	private String AttractionType;
 
-	public Attraction(String name, double price, double time, int quota, String type) {
+	public Attraction(Integer id, String name, Double price, Double time, Integer quota, String type) {
+		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.completionTime = time;
@@ -16,6 +20,10 @@ public class Attraction implements Acquirable {
 	}
 
 	// Getters
+	public int getId() {
+		return id;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -41,6 +49,7 @@ public class Attraction implements Acquirable {
 	public boolean useQuota() {
 		if (!isFull()) {
 			quotaByDay--;
+			AttractionDAO.useQuota(id);
 			return true;
 		}
 		return false;
@@ -56,8 +65,8 @@ public class Attraction implements Acquirable {
 
 	@Override
 	public String toString() {
-		return "Atraccion " + getAttractionType() + ";Nombre: " + getName() + ";Duracion: "
-				+ getCompletionTime() + " hora/s;Precio: " + getPrice() + " moneda/s";
+		return "Atraccion " + getAttractionType() + ";Nombre: " + getName() + ";Duracion: " + getCompletionTime()
+				+ " hora/s;Precio: " + getPrice() + " moneda/s";
 	}
 
 	// Si se comparan atracciones devolvera true si tienen el mismo nombre

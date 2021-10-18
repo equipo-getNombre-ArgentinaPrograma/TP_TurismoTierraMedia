@@ -53,12 +53,13 @@ public class User {
 	// Chequea si una promocion entra en su presupuesto y tiempo disponible
 	public boolean canBuy(Acquirable suggestion) {
 		boolean buy = true;
-		// Si la atraccion ya se encuentra adquirida no podra ser adquirida
+		// Si la atraccion ya se encuentra adquirida por el usuario no podra ser adquirida otra vez
 		if (getAdquiredSuggestions().contains(suggestion))
 			buy = false;
 		// Tampoco si no hay dinero, tiempo o cupos
-		if (suggestion.getCompletionTime() > this.availableTime || suggestion.getPrice() > this.availableMoney
-				|| suggestion.isFull())
+		if (suggestion.getCompletionTime() > this.availableTime 
+				  || suggestion.getPrice() > this.availableMoney
+				  || suggestion.isFull())
 			buy = false;
 		return buy;
 	}

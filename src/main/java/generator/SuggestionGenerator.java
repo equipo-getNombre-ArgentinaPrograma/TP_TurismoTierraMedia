@@ -8,7 +8,7 @@ import comparator.SuggestionComparator;
 import inObject.*;
 
 import java.util.PriorityQueue;
-
+import dao.*;
 public class SuggestionGenerator {
 	User user;
 	private ArrayList<Promotion> promos;
@@ -20,7 +20,7 @@ public class SuggestionGenerator {
 
 	// Genera las listas con los datos leidos del archivo
 	public SuggestionGenerator() {
-		this.attractions = ListGenerator.ofAttractions();
+		this.attractions = AttractionDAO.listOfAttractions();
 		this.promos = ListGenerator.ofPromotions(attractions);
 	}
 
@@ -83,13 +83,11 @@ public class SuggestionGenerator {
 	public void acceptPromotion() {
 		if (getUser().acquire(suggestion)) {
 			System.out.println("Adquiriste la promocion con exito.");
-			suggestion.useQuota();
 		}
 	}
 
 	// Se rechaza la promo sugerida
 	public void rejectPromotion() {
 		System.out.println("Rechazaste la promocion, no volveremos a sugerirla.");
-
 	}
 }
