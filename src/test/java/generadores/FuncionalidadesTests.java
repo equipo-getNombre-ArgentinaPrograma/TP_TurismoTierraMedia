@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import dao.AttractionDAO;
+import dao.PromotionDAO;
 import fileManagement.Reader;
 import fileManagement.Writer;
 import generator.ListGenerator;
@@ -16,8 +17,8 @@ import outObject.Itinerary;
 
 public class FuncionalidadesTests {
 	ArrayList<User> usuarios = ListGenerator.ofUsers();
-	ArrayList<Attraction> atracciones = AttractionDAO.listOfAttractions();
-	ArrayList<Promotion> promos = ListGenerator.ofPromotions(atracciones);
+	ArrayList<Attraction> atracciones = AttractionDAO.getAll();
+	ArrayList<Promotion> promos = PromotionDAO.getAll();
 
 	@Test
 	public void testDeUsuarios() {

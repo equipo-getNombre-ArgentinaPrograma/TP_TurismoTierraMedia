@@ -20,8 +20,8 @@ public class SuggestionGenerator {
 
 	// Genera las listas con los datos leidos del archivo
 	public SuggestionGenerator() {
-		this.attractions = AttractionDAO.listOfAttractions();
-		this.promos = ListGenerator.ofPromotions(attractions);
+		this.attractions = AttractionDAO.getAll();
+		this.promos = PromotionDAO.getAll();
 	}
 
 	// Devuelve el objeto usuario al cual esta ligado el sistema

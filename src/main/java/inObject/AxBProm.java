@@ -4,20 +4,13 @@ import java.util.ArrayList;
 
 public class AxBProm extends Promotion {
 
-	public AxBProm(ArrayList<Attraction> attractions, String type, String attraction1, String attraction2,
-			String attraction3) {
-		super(attractions, type, attraction1, attraction2);
-		this.includedAttractions.add(setFreeAttraction(attraction3));
+	public AxBProm(Integer id, ArrayList<Attraction> attractions, String type) {
+		super(id, attractions, type);
 	}
 
 	// Getter
 	public Attraction getFreeAttraction() {
 		return includedAttractions.get(2);
-	}
-
-	// Setter
-	private Attraction setFreeAttraction(String atraccion) {
-		return attractionsData.get(AttractionIndex(atraccion));
 	}
 
 	@Override

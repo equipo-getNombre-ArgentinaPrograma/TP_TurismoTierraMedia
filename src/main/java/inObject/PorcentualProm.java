@@ -5,9 +5,8 @@ import java.util.ArrayList;
 public class PorcentualProm extends Promotion {
 	private double discount;
 
-	public PorcentualProm(ArrayList<Attraction> attractions, String type, String attraction1, String attraction2,
-			double discount) {
-		super(attractions, type, attraction1, attraction2);
+	public PorcentualProm(Integer id, ArrayList<Attraction> attractions, String type, Double discount) {
+		super(id, attractions, type);
 		this.discount = discount;
 	}
 

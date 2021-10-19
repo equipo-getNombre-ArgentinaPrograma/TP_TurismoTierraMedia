@@ -3,18 +3,16 @@ package inObject;
 import java.util.ArrayList;
 
 public abstract class Promotion implements Acquirable {
-	protected ArrayList<Attraction> attractionsData;
 	protected ArrayList<Attraction> includedAttractions;
+	protected int id;
 	protected double price;
 	protected String AttractionType;
 	protected double CompletionTime;
 
-	public Promotion(ArrayList<Attraction> attractions, String type, String attraction1, String attraction2) {
-		this.attractionsData = attractions;
+	public Promotion(Integer id, ArrayList<Attraction> attractions, String type) {
+		this.id = id;
 		this.AttractionType = type;
-		includedAttractions = new ArrayList<Attraction>();
-		this.includedAttractions.add(setAttraction(attraction1));
-		this.includedAttractions.add(setAttraction(attraction2));
+		this.includedAttractions = attractions;
 	}
 
 	// Getters
@@ -42,11 +40,6 @@ public abstract class Promotion implements Acquirable {
 		return calculateCompletionTime();
 	}
 
-	// Setter
-	private Attraction setAttraction(String attraction) {
-		return attractionsData.get(AttractionIndex(attraction));
-	}
-
 	// Suma los precios de las dos atracciones
 	protected double calculatePrice() {
 		this.price = 0;
@@ -61,14 +54,6 @@ public abstract class Promotion implements Acquirable {
 		this.CompletionTime += getAttraction1().getCompletionTime();
 		this.CompletionTime += getAttraction2().getCompletionTime();
 		return CompletionTime;
-	}
-
-	public int AttractionIndex(String attraction) {
-		for (int i = 0; i < attractionsData.size(); i++) {
-			if (attractionsData.get(i).getName().equals(attraction))
-				return i;
-		}
-		return -1;
 	}
 
 	public boolean useQuota() {
@@ -109,13 +94,13 @@ public abstract class Promotion implements Acquirable {
 	@Override
 	public String toString() {
 		return "Promocion " + getAttractionType() + ";Atracciones: " + getAttraction1().getName() + ", "
-				+ getAttraction2().getName() + ";Duracion: " + getCompletionTime() + " hora/s;Precio: "
-				+ getPrice() + " moneda/s";
+				+ getAttraction2().getName() + ";Duracion: " + getCompletionTime() + " hora/s;Precio: " + getPrice()
+				+ " moneda/s";
 	}
 
 	public void printToScreen() {
 		System.out.println("Promocion " + getAttractionType() + ".\nAtracciones: " + getAttraction1().getName() + ", "
-				+ getAttraction2().getName() + ".\nDuracion: " + getCompletionTime() + " hora/s.\nPrecio: "
-				+ getPrice() + " moneda/s.");
+				+ getAttraction2().getName() + ".\nDuracion: " + getCompletionTime() + " hora/s.\nPrecio: " + getPrice()
+				+ " moneda/s.");
 	}
 }

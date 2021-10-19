@@ -45,7 +45,7 @@ public class ListGenerator {
 		}
 		return users;
 	}
-
+/*
 	// Lo mismo sucede con las promociones
 	public static ArrayList<Promotion> ofPromotions(ArrayList<Attraction> atracciones) {
 		ArrayList<Promotion> promos = new ArrayList<Promotion>();
@@ -68,4 +68,5 @@ public class ListGenerator {
 		}
 		return promos;
 	}
+*/
 }

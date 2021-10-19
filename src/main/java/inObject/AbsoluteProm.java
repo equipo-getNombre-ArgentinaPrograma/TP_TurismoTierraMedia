@@ -4,9 +4,8 @@ import java.util.ArrayList;
 
 public class AbsoluteProm extends Promotion {
 
-	public AbsoluteProm(ArrayList<Attraction> attractions, String type, String attraccion1, String attraccion2,
-			double price) {
-		super(attractions, type, attraccion1, attraccion2);
+	public AbsoluteProm(Integer id, ArrayList<Attraction> attractions, String type, Double price) {
+		super(id, attractions, type);
 		this.price = price;
 	}
 

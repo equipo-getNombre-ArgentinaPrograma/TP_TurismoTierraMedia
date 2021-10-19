@@ -56,7 +56,7 @@ public class Attraction implements Acquirable {
 	}
 
 	public boolean isFull() {
-		return quotaByDay < 1;
+		return AttractionDAO.isFull(id);
 	}
 
 	public boolean isPromotion() {
