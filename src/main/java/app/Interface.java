@@ -17,7 +17,11 @@ public class Interface {
 	private static SuggestionGenerator generator;
 	private static Scanner scanner;
 	private static Acquirable suggestion;
+<<<<<<< HEAD
 //xdd
+=======
+
+>>>>>>> 6d0d176b7596d2dd52a94c43bcba7a25fcde0e1e
 	// Mensajes validos como input del usuario
 	private static String[] expectedYes = new String[] { "si", "s", "yes", "y", "1" };
 	private static String[] expectedNo = new String[] { "no", "n", "2" };
