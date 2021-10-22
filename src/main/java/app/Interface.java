@@ -32,7 +32,7 @@ public class Interface {
 		ArrayList<Itinerary> itineraries = new ArrayList<Itinerary>();
 		Itinerary itinerary;
 		User user;
-		// Se llama a la funcion para que comience la interaccion
+		// Se llama a la funcion para que comience la interaccion	
 		while (iterator.hasNext()) {
 			user = iterator.next();
 			suggest(user);
