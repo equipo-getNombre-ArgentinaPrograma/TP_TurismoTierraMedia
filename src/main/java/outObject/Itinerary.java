@@ -17,29 +17,29 @@ public class Itinerary {
 		return user;
 	}
 	
-	public ArrayList<Acquirable> getSugerenciasAdquiridas(){
-		return user.getAdquiredSuggestions();
+	public ArrayList<Acquirable> getAcquiredSuggestions(){
+		return user.getAcquiredSuggestions();
 	}
 
 	public double getSpentMoney() {
-		return calcularDineroGastado();
+		return calculateSpentMoney();
 	}
 
-	public double getTiempoNecesario() {
-		return calcularTiempoNecesario();
+	public double getSpentTime() {
+		return calculateSpentTime();
 	}
 
 	// Calculan los atributos
-	private double calcularDineroGastado() {
+	private double calculateSpentMoney() {
 		double sum = 0;
-		for (Acquirable s : getUser().getAdquiredSuggestions())
+		for (Acquirable s : getUser().getAcquiredSuggestions())
 			sum += s.getPrice();
 		return sum;
 	}
 
-	private double calcularTiempoNecesario() {
+	private double calculateSpentTime() {
 		double sum = 0;
-		for (Acquirable s : getUser().getAdquiredSuggestions())
+		for (Acquirable s : getUser().getAcquiredSuggestions())
 			sum += s.getCompletionTime();
 		return sum;
 	}

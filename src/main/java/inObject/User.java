@@ -2,15 +2,18 @@ package inObject;
 
 import java.util.ArrayList;
 
+import dao.UserDAO;
+
 public class User {
 	private ArrayList<Acquirable> acquiredSuggestions = new ArrayList<Acquirable>();
-
+	private int id;
 	private String name;
 	private double availableMoney;
 	private double availableTime;
 	private String preferredType;
 
-	public User(String name, double money, double time, String type) {
+	public User(Integer id, String name, double money, double time, String type) {
+		this.id = id;
 		this.name = name;
 		this.availableMoney = money;
 		this.availableTime = time;
@@ -18,6 +21,10 @@ public class User {
 	}
 
 	// Getters
+	public int getId() {
+		return id;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -34,16 +41,18 @@ public class User {
 		return preferredType;
 	}
 
-	public ArrayList<Acquirable> getAdquiredSuggestions() {
+	public ArrayList<Acquirable> getAcquiredSuggestions() {
 		return acquiredSuggestions;
 	}
 
 	// Adquiere la sugerencia sumandola a las listas y resta tiempo y presupuesto
 	public boolean acquire(Acquirable suggestion) {
 		if (canBuy(suggestion)) {
-			getAdquiredSuggestions().add(suggestion);
+			UserDAO.acquire(suggestion, id);
+			getAcquiredSuggestions().add(suggestion);
 			this.availableTime -= suggestion.getCompletionTime();
 			this.availableMoney -= suggestion.getPrice();
+			// falta restar plata y tiempo en la db
 			suggestion.useQuota();
 			return true;
 		}
@@ -54,7 +63,7 @@ public class User {
 	public boolean canBuy(Acquirable suggestion) {
 		boolean buy = true;
 		// Si la atraccion ya se encuentra adquirida por el usuario no podra ser adquirida otra vez
-		if (getAdquiredSuggestions().contains(suggestion))
+		if (getAcquiredSuggestions().contains(suggestion))
 			buy = false;
 		// Tampoco si no hay dinero, tiempo o cupos
 		if (suggestion.getCompletionTime() > this.availableTime 

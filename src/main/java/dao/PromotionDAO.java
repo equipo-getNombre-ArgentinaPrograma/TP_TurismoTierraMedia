@@ -25,7 +25,7 @@ public class PromotionDAO {
 			prom = new PorcentualProm(id, includedAttractions, attractionType, discount);
 		else if (promotionType.equals("AxB"))
 			prom = new AxBProm(id, includedAttractions, attractionType);
-		
+
 		return prom;
 	}
 
@@ -43,6 +43,21 @@ public class PromotionDAO {
 				promotions.add(toPromotion(resultSet));
 
 			return promotions;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+
+// Devuelve promocion por id
+	public static Promotion findById(int id) {
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+			String query = "SELECT * FROM promociones WHERE id = ?";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			return toPromotion(resultSet);
 		} catch (Exception e) {
 			throw new MissingDataException(e);
 		}

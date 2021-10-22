@@ -1,6 +1,8 @@
 package inObject;
 
 public interface Acquirable {
+	
+	public int getId();
 
 	public double getPrice();
 
@@ -17,5 +19,6 @@ public interface Acquirable {
 	public boolean equals(Object object);
 
 	public void printToScreen();
+
 	
 }

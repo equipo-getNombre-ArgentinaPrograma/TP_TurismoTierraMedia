@@ -28,6 +28,10 @@ public abstract class Promotion implements Acquirable {
 		return includedAttractions;
 	}
 
+	public int getId() {
+		return id;
+	}
+
 	public double getPrice() {
 		return calculatePrice();
 	}
@@ -58,7 +62,6 @@ public abstract class Promotion implements Acquirable {
 
 	public boolean useQuota() {
 		if (!isFull()) {
-			System.out.println("USO CUOTA\n\n ");
 			getAttraction1().useQuota();
 			getAttraction2().useQuota();
 			return true;

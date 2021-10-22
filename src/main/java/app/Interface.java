@@ -38,9 +38,9 @@ public class Interface {
 			suggest(user);
 			itinerary = new Itinerary(user);
 			itineraries.add(itinerary);
-			System.out.println("--Usted tuvo " + user.getAdquiredSuggestions().size()
+			System.out.println("--Usted tuvo " + user.getAcquiredSuggestions().size()
 					+ " adquisicion/es, debera gastar " + itinerary.getSpentMoney() + " moneda/s y requerira de "
-					+ itinerary.getTiempoNecesario() + " hora/s para completar su recorrido.\n");
+					+ itinerary.getSpentTime() + " hora/s para completar su recorrido.\n");
 		}
 		System.out.println("No hay mas usuarios, quiere imprimir el itinerario de cada uno?(y/n): $ ");
 		if (userInput(expectedYes, expectedNo).equals("si")) {

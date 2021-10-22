@@ -144,12 +144,12 @@ public class FuncionalidadesTests {
 
 		Itinerary it = new Itinerary(user); // Inicializo el itinerario del usuario
 		assertEquals(it.getSpentMoney(), 45, 0.1); // Debe gastar 45 monedas
-		assertEquals(it.getTiempoNecesario(), 3, 0.1); // Necesita 3 horas
+		assertEquals(it.getSpentTime(), 3, 0.1); // Necesita 3 horas
 
 		// Accedo a las sugerencias desde el itinerario
-		assertEquals(it.getSugerenciasAdquiridas().get(0).toString(),
+		assertEquals(it.getAcquiredSuggestions().get(0).toString(),
 				"Atraccion Aventura;Nombre: Moria;Duracion: 2.0 hora/s;Precio: 10.0 moneda/s");
-		assertEquals(it.getSugerenciasAdquiridas().get(1).toString(),
+		assertEquals(it.getAcquiredSuggestions().get(1).toString(),
 				"Atraccion Degustacion;Nombre: Lothlorien;Duracion: 1.0 hora/s;Precio: 35.0 moneda/s");
 	}
 

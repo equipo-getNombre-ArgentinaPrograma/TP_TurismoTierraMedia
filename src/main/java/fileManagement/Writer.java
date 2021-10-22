@@ -17,11 +17,11 @@ public class Writer {
 			PrintWriter salida = new PrintWriter(new FileWriter("./salida/" + it.getUser().getName() + ".txt"));
 			salida.println("User;" + it.getUser().getName());
 			// Se imprimen las sugerencias adquiridas
-			for (Acquirable ad : it.getSugerenciasAdquiridas())
+			for (Acquirable ad : it.getAcquiredSuggestions())
 				salida.println(ad.toString());
 			// Se imprimen los demas datos pedidos
 			salida.println("Total a pagar;" + it.getSpentMoney());
-			salida.println("Horas Necesarias;" + it.getTiempoNecesario());
+			salida.println("Horas Necesarias;" + it.getSpentTime());
 
 			salida.close();
 		}

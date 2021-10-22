@@ -22,7 +22,7 @@ public class AttractionDAO {
 		return new Attraction(id, name, price, completionTime, quota, type);
 	}
 
-// Devuelve un arraylist con todas las atracciones en la base de datos
+// Devuelve todas las atracciones en la base de datos
 	public static ArrayList<Attraction> getAll() {
 		try {
 			ArrayList<Attraction> attractions = new ArrayList<Attraction>();
@@ -40,15 +40,29 @@ public class AttractionDAO {
 			throw new MissingDataException(e);
 		}
 	}
-	
-	
+
+// Devuelve atraccion por id
+	public static Attraction findById(int id) {
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+			String query = "SELECT * FROM atracciones WHERE id = ?";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			return toAttraction(resultSet);
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+
+// Devuelve todas las atracciones pertenecientes a la promocion indicada
 	public static ArrayList<Attraction> findByPromotion(int id) {
 		try {
 			ArrayList<Attraction> includedAttractions = new ArrayList<Attraction>();
 			Connection connection = ConnectionProvider.getConnection();
 			String query = "SELECT atracciones.* FROM atracciones_en_promociones"
-						 + " join atracciones on atracciones.id = attraction_id"
-						 + " where promotion_id = ?";
+					+ " join atracciones on atracciones.id = attraction_id" + " WHERE promotion_id = ?";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
@@ -91,7 +105,7 @@ public class AttractionDAO {
 	}
 
 // Devuelve los cupos a su valor inicial
-	public static void restoreQuota() {
+	public static boolean restoreQuota() {
 		ArrayList<Attraction> attractions = getAll();
 		try {
 			Connection connection = ConnectionProvider.getConnection();
@@ -103,6 +117,7 @@ public class AttractionDAO {
 				preparedStatement.setInt(1, attraction.getId());
 				preparedStatement.executeUpdate();
 			}
+			return true;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
 		}
