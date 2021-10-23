@@ -79,7 +79,7 @@ public class Attraction implements Acquirable {
 			if (this.getName().equals(((Attraction) object).getName()))
 				return true;
 		if (object instanceof Promotion)
-			for (Attraction attraction : ((Promotion) object).getAtraccionesIncluidas())
+			for (Attraction attraction : ((Promotion) object).getIncludedAttractions())
 				if (this.equals(attraction))
 					return true;
 		return false;

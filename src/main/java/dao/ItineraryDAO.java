@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import db.ConnectionProvider;
 import inObject.Acquirable;
 import inObject.Attraction;
-
 import outObject.Itinerary;
 
 public class ItineraryDAO {
@@ -14,8 +13,11 @@ public class ItineraryDAO {
 		String acquiredAttractions = "";
 		String acquiredPromotions = "";
 		for (Acquirable acquirable : itinerary.getAcquiredSuggestions())
-			if (acquirable.isPromotion())
+			if (acquirable.isPromotion()) {
 				acquiredPromotions += acquirable.getId() + ". ";
+				for(Attraction attraction : AttractionDAO.findByPromotion(acquirable.getId()))
+					acquiredAttractions += attraction.getName() + ". ";
+			}
 			else
 				acquiredAttractions += ((Attraction) acquirable).getName() + ". ";
 		try {

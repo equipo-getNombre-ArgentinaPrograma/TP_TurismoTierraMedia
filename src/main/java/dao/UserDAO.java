@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import db.ConnectionProvider;
 import inObject.Acquirable;
@@ -36,5 +37,9 @@ public class UserDAO {
 		} catch (Exception e) {
 			throw new MissingDataException(e);
 		}
+	}
+	
+	public static ArrayList<User> getAll() {
+		return new ArrayList<User>();
 	}
 }

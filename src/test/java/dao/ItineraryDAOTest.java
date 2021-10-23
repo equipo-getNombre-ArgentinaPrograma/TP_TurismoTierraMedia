@@ -13,12 +13,12 @@ import outObject.Itinerary;
 
 public class ItineraryDAOTest {
 
-	//@Test
+	@Test
 	public void agregarAtraccionesAlItinerario() {
-		User user = new User(1, "Juan", 100d, 100d, "Aventura");
+		AttractionDAO.restoreQuota();
+		User user = new User(2, "Juan", 100d, 100d, "Aventura");
 		assertTrue(user.acquire(AttractionDAO.findById(1)));
-		assertTrue(user.acquire(AttractionDAO.findById(2)));
-		assertTrue(user.acquire(AttractionDAO.findById(3)));
+		assertTrue(user.acquire(PromotionDAO.findById(3)));
 		Itinerary itinerary = new Itinerary(user);
 		assertEquals(1, ItineraryDAO.print(itinerary));
 	}
@@ -36,7 +36,7 @@ public class ItineraryDAOTest {
 	public void resetearCupos() {
 		assertTrue(AttractionDAO.restoreQuota());
 	}
-	@Test
+	//@Test
 	public void borrarTablas() throws SQLException {
 		Connection connection = ConnectionProvider.getConnection();
 		String query = "DELETE FROM compras_usuarios";

@@ -19,6 +19,8 @@ public interface Acquirable {
 	public boolean equals(Object object);
 
 	public void printToScreen();
+	
+	
 
 	
 }

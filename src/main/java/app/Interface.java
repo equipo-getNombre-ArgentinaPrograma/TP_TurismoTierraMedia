@@ -3,6 +3,7 @@ package app;
 import java.util.Scanner;
 
 import dao.AttractionDAO;
+import dao.UserDAO;
 import fileManagement.Writer;
 import generator.*;
 import inObject.*;
@@ -17,39 +18,44 @@ public class Interface {
 	private static SuggestionGenerator generator;
 	private static Scanner scanner;
 	private static Acquirable suggestion;
-
-	// Mensajes validos como input del usuario
-	private static String[] expectedYes = new String[] { "si", "s", "yes", "y", "1" };
-	private static String[] expectedNo = new String[] { "no", "n", "2" };
-	private static String[] expectedAccept = new String[] { "aceptar", "a", "1", "si", "s" };
-	private static String[] expectedReject = new String[] { "rechazar", "r", "2", "no", "n" };
-
-	public static void main(String[] args) throws IOException {
+	//private static ArrayList<User> users = UserDAO.getAll();
+	private static ArrayList<User> users = ListGenerator.ofUsers();
+	
+public static void main(String[] args) throws IOException {
 		generator = new SuggestionGenerator();
 		scanner = new Scanner(System.in);
-		Iterator<User> iterator = ListGenerator.ofUsers().iterator();
-		
 		ArrayList<Itinerary> itineraries = new ArrayList<Itinerary>();
 		Itinerary itinerary;
 		User user;
-		// Se llama a la funcion para que comience la interaccion	
-		while (iterator.hasNext()) {
-			user = iterator.next();
+		String index = "0";
+		System.out.println("Bienvenido a la Tierra Media! Elija su usuario para continuar:");
+		showUsers();	
+		System.out.print("$");
+		index = userInput(ExpectedAns.users(users.size()));
+		while (index != "0") {
+			user = users.get(Integer.parseInt(index));
 			suggest(user);
 			itinerary = new Itinerary(user);
 			itineraries.add(itinerary);
 			System.out.println("--Usted tuvo " + user.getAcquiredSuggestions().size()
 					+ " adquisicion/es, debera gastar " + itinerary.getSpentMoney() + " moneda/s y requerira de "
 					+ itinerary.getSpentTime() + " hora/s para completar su recorrido.\n");
+			showUsers();
+			index = userInput(ExpectedAns.users(users.size()));
 		}
 		System.out.println("No hay mas usuarios, quiere imprimir el itinerario de cada uno?(y/n): $ ");
-		if (userInput(expectedYes, expectedNo).equals("si")) {
+		if (userInput(ExpectedAns.yes(), ExpectedAns.no()).equals("si")) {
 			Writer.setItinerary(itineraries);
 			System.out.println("Archivos creados.");
 		} else
 			System.out.println("Archivos no creados.");
 		System.out.println("Fin del programa.");
 		AttractionDAO.restoreQuota();
+	}
+	
+	public static void showUsers() {
+		for(User user : users)
+			System.out.println(user.getId() + ". " + user.getName());
 	}
 
 	// Mientras haya promociones y el usuario quiera, se sugeriran promociones
@@ -62,7 +68,7 @@ public class Interface {
 			System.out.println("\n--Le sugerimos la siguiente " + Suggestions.type(suggestion) + ":");
 			suggestion.printToScreen();
 			System.out.printf("Puede aceptar o rechazar(a/r): $ ");
-			if (userInput(expectedAccept, expectedReject).equals("aceptar")) {
+			if (userInput(ExpectedAns.accept(), ExpectedAns.reject()).equals("aceptar")) {
 				generator.acceptPromotion();
 				System.out.println("Le quedan " + user.getAvailableMoney() + " moneda(s) y " + user.getAvailableTime()
 						+ " horas disponible(s)");
@@ -88,5 +94,9 @@ public class Interface {
 						"La respuesta no es correcta, pruebe con '" + expectedA[0] + "' o '" + expectedB[0] + "': $");
 		} while (!(Arrays.asList(expectedB).contains(ans) || Arrays.asList(expectedA).contains(ans)));
 		return ans;
+	}
+	
+	private static String userInput(String[] expectedAns) {
+		return userInput(expectedAns, expectedAns);
 	}
 }

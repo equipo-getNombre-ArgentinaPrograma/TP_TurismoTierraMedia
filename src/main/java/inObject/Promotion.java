@@ -24,7 +24,7 @@ public abstract class Promotion implements Acquirable {
 		return includedAttractions.get(1);
 	}
 
-	public ArrayList<Attraction> getAtraccionesIncluidas() {
+	public ArrayList<Attraction> getIncludedAttractions() {
 		return includedAttractions;
 	}
 
@@ -89,7 +89,7 @@ public abstract class Promotion implements Acquirable {
 					return true;
 		if (object instanceof Promotion)
 			for (Attraction atraccion : includedAttractions)
-				if (((Promotion) object).getAtraccionesIncluidas().contains(atraccion))
+				if (((Promotion) object).getIncludedAttractions().contains(atraccion))
 					return true;
 		return false;
 	}

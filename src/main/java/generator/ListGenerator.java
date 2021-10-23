@@ -36,7 +36,7 @@ public class ListGenerator {
 		ArrayList<User> users = new ArrayList<User>();
 		for (String[] tmp : Reader.get("entrada", "usuarios")) {
 			try {
-				users.add(new User(tmp[0], Double.parseDouble(tmp[1]), Double.parseDouble(tmp[2]), (tmp[3])));
+				users.add(new User(1, tmp[0], Double.parseDouble(tmp[1]), Double.parseDouble(tmp[2]), (tmp[3])));
 			} catch (NumberFormatException e) {
 				System.err.println("No se pudo leer la linea " + users.size() + " del archivo de usuarios.");
 			} catch (ArrayIndexOutOfBoundsException e) {
