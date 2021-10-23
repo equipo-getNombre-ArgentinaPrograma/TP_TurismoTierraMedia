@@ -21,7 +21,7 @@ public class Interface {
 	//private static ArrayList<User> users = UserDAO.getAll();
 	private static ArrayList<User> users = ListGenerator.ofUsers();
 	
-public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException {
 		generator = new SuggestionGenerator();
 		scanner = new Scanner(System.in);
 		ArrayList<Itinerary> itineraries = new ArrayList<Itinerary>();
