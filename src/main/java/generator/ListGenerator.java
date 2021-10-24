@@ -28,8 +28,7 @@ public class ListGenerator {
 		}
 		return attractions;
 	}
-*/
-	
+
 	// En cambio, si un usuario no puede leerse simplemente no se agregara a la
 	// lista
 	public static ArrayList<User> ofUsers() {
@@ -45,7 +44,7 @@ public class ListGenerator {
 		}
 		return users;
 	}
-/*
+
 	// Lo mismo sucede con las promociones
 	public static ArrayList<Promotion> ofPromotions(ArrayList<Attraction> atracciones) {
 		ArrayList<Promotion> promos = new ArrayList<Promotion>();

@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import dao.AttractionDAO;
 import dao.PromotionDAO;
+import dao.UserDAO;
 import fileManagement.Reader;
 import fileManagement.Writer;
 import generator.ListGenerator;
@@ -16,14 +17,14 @@ import inObject.*;
 import outObject.Itinerary;
 
 public class FuncionalidadesTests {
-	ArrayList<User> usuarios = ListGenerator.ofUsers();
+	ArrayList<User> usuarios = UserDAO.getAll();
 	ArrayList<Attraction> atracciones = AttractionDAO.getAll();
 	ArrayList<Promotion> promos = PromotionDAO.getAll();
 
 	@Test
 	public void testDeUsuarios() {
 		assertEquals(usuarios.get(0).getName(), "Eowyn");
-		assertEquals(usuarios.get(1).getAvailableMoney(), 100, 0.1);
+		assertEquals(usuarios.get(1).getAvailableCoins(), 100, 0.1);
 		assertEquals(usuarios.get(2).getAvailableTime(), 8, 0.1);
 		assertEquals(usuarios.get(3).getPreferredType(), "Paisaje");
 	}
@@ -48,16 +49,16 @@ public class FuncionalidadesTests {
 	@Test
 	public void adquirirAtraccionConUsuario() {
 		User user = usuarios.get(0); // Usuario 'Ewowyn'
-		assertEquals(user.getAvailableMoney(), 10, 0.1); // Tiene 10 monedas
+		assertEquals(user.getAvailableCoins(), 10, 0.1); // Tiene 10 monedas
 
 		assertTrue(user.acquire(atracciones.get(0))); // Adquiere 'Moria' por 10 monedas y 2 horas
 
-		assertEquals(user.getAvailableMoney(), 0, 0.1); // Le quedan 0 monedas
+		assertEquals(user.getAvailableCoins(), 0, 0.1); // Le quedan 0 monedas
 		assertEquals(user.getAvailableTime(), 6, 0.1); // Le quedan 6 horas
 
 		assertFalse(user.acquire(atracciones.get(1))); // No puede adquirir 'Minas Tirith'
 
-		assertEquals(user.getAvailableMoney(), 0, 0.1);// Otra vez le quedan 0 monedas
+		assertEquals(user.getAvailableCoins(), 0, 0.1);// Otra vez le quedan 0 monedas
 	}
 
 	@Test
@@ -65,23 +66,23 @@ public class FuncionalidadesTests {
 		User user = usuarios.get(2); // Usuario 'Sam'
 		assertTrue(user.acquire(promos.get(1))); // Adquiere promo 'Moria' y 'Bosque Negro' por 10 monedas y 6 horas
 
-		assertEquals(user.getAvailableMoney(), 26, 0.1); // Le quedan 26 monedas
+		assertEquals(user.getAvailableCoins(), 26, 0.1); // Le quedan 26 monedas
 		assertEquals(user.getAvailableTime(), 2, 0.1); // Le quedan 2 horas
 
 		assertFalse(user.acquire(atracciones.get(0))); // No puedo adquirir 'Moria' aunque posea el dinero y el tiempo
 
-		assertEquals(user.getAvailableMoney(), 26, 0.1); // Le siguen quedando 26 monedas
+		assertEquals(user.getAvailableCoins(), 26, 0.1); // Le siguen quedando 26 monedas
 
 		assertTrue(user.acquire(atracciones.get(4))); // Adquiere 'Abismo de Helm'
 
-		assertEquals(user.getAvailableMoney(), 21, 0.1); // Le quedan 21 monedas
+		assertEquals(user.getAvailableCoins(), 21, 0.1); // Le quedan 21 monedas
 		assertEquals(user.getAvailableTime(), 0, 0.1); // Le quedan 0 horas
 	}
 
 	@Test
 	public void restarCuposAtraccion() {
 		User user = usuarios.get(1); // Usuario 'Gandalf'
-		assertEquals(user.getAvailableMoney(), 100, 0.1); // Tiene 100 monedas
+		assertEquals(user.getAvailableCoins(), 100, 0.1); // Tiene 100 monedas
 		assertEquals(atracciones.get(3).getCuposXdia(), 4); // 'Mordor' tiene 4 cupos
 
 		assertTrue(user.acquire(atracciones.get(3))); // Adquiere 'Mordor'
@@ -92,7 +93,7 @@ public class FuncionalidadesTests {
 	@Test
 	public void restarCuposPromocion() {
 		User user = usuarios.get(2); // Usuario 'Sam'
-		assertEquals(user.getAvailableMoney(), 36, 0.1); // Tiene 36 monedas
+		assertEquals(user.getAvailableCoins(), 36, 0.1); // Tiene 36 monedas
 		assertTrue(promos.get(0).isFull()); // Hay cupos en la primera promo
 
 		assertTrue(user.acquire(promos.get(0))); // Adquiere la promocion
@@ -134,12 +135,12 @@ public class FuncionalidadesTests {
 	@Test
 	public void itinerarioDeUnUsuario() {
 		User user = usuarios.get(3); // Usuario 'Galadriel'
-		assertEquals(user.getAvailableMoney(), 120, 0.1); // tiene 120 monedas
+		assertEquals(user.getAvailableCoins(), 120, 0.1); // tiene 120 monedas
 
 		assertTrue(user.acquire(atracciones.get(0))); // Adquiere 'Moria'
 		assertTrue(user.acquire(atracciones.get(5))); // Adquiere 'Lothlorien'
 
-		assertEquals(user.getAvailableMoney(), 75, 0.1); // Le quedan 55 monedas
+		assertEquals(user.getAvailableCoins(), 75, 0.1); // Le quedan 55 monedas
 		assertEquals(user.getAvailableTime(), 1.5, 0.1); // Le quedan 1.5 horas restantes
 
 		Itinerary it = new Itinerary(user); // Inicializo el itinerario del usuario
@@ -161,7 +162,7 @@ public class FuncionalidadesTests {
 		its.add(it); // Agrego el itinerario al array
 
 		assertTrue(user.acquire(atracciones.get(2))); // Adquiere 'La Comarca'
-		assertEquals(user.getAvailableMoney(), 7, 0.1); // Le quedan 7 monedas
+		assertEquals(user.getAvailableCoins(), 7, 0.1); // Le quedan 7 monedas
 
 		Writer.setItinerary(its); // Escribo el archivo 'Eowyn.csv'
 		ArrayList<String[]> Eowyn = Reader.get("salida", "Eowyn"); // Leo el archivo

@@ -13,7 +13,7 @@ import outObject.Itinerary;
 
 public class ItineraryDAOTest {
 
-	@Test
+	//@Test
 	public void agregarAtraccionesAlItinerario() {
 		AttractionDAO.restoreQuota();
 		User user = new User(2, "Juan", 100d, 100d, "Aventura");
@@ -36,7 +36,7 @@ public class ItineraryDAOTest {
 	public void resetearCupos() {
 		assertTrue(AttractionDAO.restoreQuota());
 	}
-	//@Test
+	@Test
 	public void borrarTablas() throws SQLException {
 		Connection connection = ConnectionProvider.getConnection();
 		String query = "DELETE FROM compras_usuarios";

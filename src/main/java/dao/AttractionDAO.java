@@ -18,23 +18,19 @@ public class AttractionDAO {
 		Double completionTime = resultSet.getDouble("completion_time");
 		Integer quota = resultSet.getInt("quota");
 		String type = resultSet.getString("type");
-
 		return new Attraction(id, name, price, completionTime, quota, type);
 	}
 
 // Devuelve todas las atracciones en la base de datos
 	public static ArrayList<Attraction> getAll() {
+		ArrayList<Attraction> attractions = new ArrayList<Attraction>();
+		String query = "SELECT * FROM atracciones";
 		try {
-			ArrayList<Attraction> attractions = new ArrayList<Attraction>();
 			Connection connection = ConnectionProvider.getConnection();
-			String query = "SELECT * FROM atracciones";
-
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			ResultSet resultSet = preparedStatement.executeQuery();
-
 			while (resultSet.next())
 				attractions.add(toAttraction(resultSet));
-
 			return attractions;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
@@ -43,10 +39,9 @@ public class AttractionDAO {
 
 // Devuelve atraccion por id
 	public static Attraction findById(int id) {
+		String query = "SELECT * FROM atracciones WHERE id = ?";
 		try {
 			Connection connection = ConnectionProvider.getConnection();
-			String query = "SELECT * FROM atracciones WHERE id = ?";
-
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -58,19 +53,16 @@ public class AttractionDAO {
 
 // Devuelve todas las atracciones pertenecientes a la promocion indicada
 	public static ArrayList<Attraction> findByPromotion(int id) {
+		ArrayList<Attraction> includedAttractions = new ArrayList<Attraction>();
+		String query = "SELECT atracciones.* FROM atracciones_en_promociones"
+				+ " join atracciones on atracciones.id = attraction_id" + " WHERE promotion_id = ?";
 		try {
-			ArrayList<Attraction> includedAttractions = new ArrayList<Attraction>();
 			Connection connection = ConnectionProvider.getConnection();
-			String query = "SELECT atracciones.* FROM atracciones_en_promociones"
-					+ " join atracciones on atracciones.id = attraction_id" + " WHERE promotion_id = ?";
-
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
 			ResultSet resultSet = preparedStatement.executeQuery();
-
 			while (resultSet.next())
 				includedAttractions.add(toAttraction(resultSet));
-
 			return includedAttractions;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
@@ -79,9 +71,9 @@ public class AttractionDAO {
 
 // Devuelve true si no le quedan cupos a la atraccion
 	public static boolean isFull(int id) {
+		String query = "SELECT quota FROM atracciones WHERE atracciones.id = ?";
 		try {
 			Connection connection = ConnectionProvider.getConnection();
-			String query = "SELECT quota FROM atracciones WHERE atracciones.id = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -93,9 +85,9 @@ public class AttractionDAO {
 
 // Resta un cupo de la atraccion en la base de datos
 	public static int useQuota(int id) {
+		String query = "UPDATE atracciones SET quota = quota - 1 WHERE atracciones.id = ?";
 		try {
 			Connection connection = ConnectionProvider.getConnection();
-			String query = "UPDATE atracciones SET quota = quota - 1 WHERE atracciones.id = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
 			return preparedStatement.executeUpdate();
@@ -107,11 +99,9 @@ public class AttractionDAO {
 // Devuelve los cupos a su valor inicial
 	public static boolean restoreQuota() {
 		ArrayList<Attraction> attractions = getAll();
+		String query = "UPDATE atracciones SET quota = initial_quota WHERE atracciones.id = ?";
 		try {
 			Connection connection = ConnectionProvider.getConnection();
-
-			String query = "UPDATE atracciones SET quota = initial_quota WHERE atracciones.id = ?";
-
 			for (Attraction attraction : attractions) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setInt(1, attraction.getId());

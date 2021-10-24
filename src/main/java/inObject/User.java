@@ -8,14 +8,14 @@ public class User {
 	private ArrayList<Acquirable> acquiredSuggestions = new ArrayList<Acquirable>();
 	private int id;
 	private String name;
-	private double availableMoney;
+	private double availableCoins;
 	private double availableTime;
 	private String preferredType;
 
-	public User(Integer id, String name, double money, double time, String type) {
+	public User(Integer id, String name, double coins, double time, String type) {
 		this.id = id;
 		this.name = name;
-		this.availableMoney = money;
+		this.availableCoins = coins;
 		this.availableTime = time;
 		this.preferredType = type;
 	}
@@ -29,8 +29,8 @@ public class User {
 		return name;
 	}
 
-	public double getAvailableMoney() {
-		return availableMoney;
+	public double getAvailableCoins() {
+		return availableCoins;
 	}
 
 	public double getAvailableTime() {
@@ -48,15 +48,20 @@ public class User {
 	// Adquiere la sugerencia sumandola a las listas y resta tiempo y presupuesto
 	public boolean acquire(Acquirable suggestion) {
 		if (canBuy(suggestion)) {
-			UserDAO.acquire(suggestion, id);
 			getAcquiredSuggestions().add(suggestion);
 			this.availableTime -= suggestion.getCompletionTime();
-			this.availableMoney -= suggestion.getPrice();
-			// falta restar plata y tiempo en la db
+			this.availableCoins -= suggestion.getPrice();
+			updateDB(suggestion);
 			suggestion.useQuota();
 			return true;
 		}
 		return false;
+	}
+	public boolean updateDB(Acquirable suggestion) {
+		UserDAO.acquire(suggestion, id);
+		UserDAO.useCoins(suggestion.getPrice(), id);
+		UserDAO.useTime(suggestion.getCompletionTime(), id);
+		return true;
 	}
 
 	// Chequea si una promocion entra en su presupuesto y tiempo disponible
@@ -67,7 +72,7 @@ public class User {
 			buy = false;
 		// Tampoco si no hay dinero, tiempo o cupos
 		if (suggestion.getCompletionTime() > this.availableTime 
-				  || suggestion.getPrice() > this.availableMoney
+				  || suggestion.getPrice() > this.availableCoins
 				  || suggestion.isFull())
 			buy = false;
 		return buy;
@@ -75,7 +80,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "[" + getName() + ", " + getAvailableMoney() + ", " + getAvailableTime() + ", " + getPreferredType()
+		return "[" + getName() + ", " + getAvailableCoins() + ", " + getAvailableTime() + ", " + getPreferredType()
 				+ "]";
 	}
 }

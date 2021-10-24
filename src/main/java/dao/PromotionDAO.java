@@ -25,23 +25,19 @@ public class PromotionDAO {
 			prom = new PorcentualProm(id, includedAttractions, attractionType, discount);
 		else if (promotionType.equals("AxB"))
 			prom = new AxBProm(id, includedAttractions, attractionType);
-
 		return prom;
 	}
 
 // Devuelve un arraylist con todas las promociones en la base de datos
 	public static ArrayList<Promotion> getAll() {
+		String query = "SELECT * FROM promociones";
 		try {
 			ArrayList<Promotion> promotions = new ArrayList<Promotion>();
 			Connection connection = ConnectionProvider.getConnection();
-			String query = "SELECT * FROM promociones";
-
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			ResultSet resultSet = preparedStatement.executeQuery();
-
 			while (resultSet.next())
 				promotions.add(toPromotion(resultSet));
-
 			return promotions;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
@@ -50,10 +46,9 @@ public class PromotionDAO {
 
 // Devuelve promocion por id
 	public static Promotion findById(int id) {
+		String query = "SELECT * FROM promociones WHERE id = ?";
 		try {
 			Connection connection = ConnectionProvider.getConnection();
-			String query = "SELECT * FROM promociones WHERE id = ?";
-
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
 			ResultSet resultSet = preparedStatement.executeQuery();

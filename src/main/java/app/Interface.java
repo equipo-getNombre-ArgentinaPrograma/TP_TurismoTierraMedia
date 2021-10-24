@@ -1,67 +1,70 @@
 package app;
 
 import java.util.Scanner;
-
 import dao.AttractionDAO;
+import dao.ItineraryDAO;
 import dao.UserDAO;
-import fileManagement.Writer;
 import generator.*;
 import inObject.*;
 import outObject.Itinerary;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 
 public class Interface {
 	private static SuggestionGenerator generator;
 	private static Scanner scanner;
 	private static Acquirable suggestion;
-	//private static ArrayList<User> users = UserDAO.getAll();
-	private static ArrayList<User> users = ListGenerator.ofUsers();
-	
+	private static ArrayList<User> users;
+	private static User user;
+
 	public static void main(String[] args) throws IOException {
 		generator = new SuggestionGenerator();
 		scanner = new Scanner(System.in);
-		ArrayList<Itinerary> itineraries = new ArrayList<Itinerary>();
+		users = UserDAO.getAll();
+		resetTables();
 		Itinerary itinerary;
-		User user;
-		String index = "0";
-		System.out.println("Bienvenido a la Tierra Media! Elija su usuario para continuar:");
-		showUsers();	
-		System.out.print("$");
-		index = userInput(ExpectedAns.users(users.size()));
-		while (index != "0") {
-			user = users.get(Integer.parseInt(index));
+		System.out.println("Bienvenido a la Tierra Media! Elija su usuario para continuar (0 para salir):");
+		showUsers();
+		chooseUser();
+		while (user != null) {
 			suggest(user);
 			itinerary = new Itinerary(user);
-			itineraries.add(itinerary);
+			ItineraryDAO.print(itinerary);
 			System.out.println("--Usted tuvo " + user.getAcquiredSuggestions().size()
 					+ " adquisicion/es, debera gastar " + itinerary.getSpentMoney() + " moneda/s y requerira de "
 					+ itinerary.getSpentTime() + " hora/s para completar su recorrido.\n");
+			System.out.println("Elija su usuario para continuar (0 para salir):");
 			showUsers();
-			index = userInput(ExpectedAns.users(users.size()));
+			chooseUser();
 		}
-		System.out.println("No hay mas usuarios, quiere imprimir el itinerario de cada uno?(y/n): $ ");
-		if (userInput(ExpectedAns.yes(), ExpectedAns.no()).equals("si")) {
-			Writer.setItinerary(itineraries);
-			System.out.println("Archivos creados.");
-		} else
-			System.out.println("Archivos no creados.");
 		System.out.println("Fin del programa.");
 		AttractionDAO.restoreQuota();
 	}
-	
+
 	public static void showUsers() {
-		for(User user : users)
+		for (User user : users)
 			System.out.println(user.getId() + ". " + user.getName());
+		System.out.print("$");
+	}
+
+	public static void chooseUser() {
+		String selection = userSelector(ExpectedAns.users(users.size()));
+		if (!selection.equals("0"))
+			changeUser(Integer.parseInt(selection) - 1);
+		else
+			user = null;
+
+	}
+
+	public static void changeUser(int selection) {
+		user = users.get(selection);
 	}
 
 	// Mientras haya promociones y el usuario quiera, se sugeriran promociones
 	private static void suggest(User user) {
 		generator.to(user);
-		System.out.println("Bienvenido " + user.getName() + ", usted posee " + user.getAvailableMoney() + " moneda/s y "
+		System.out.println("Bienvenido " + user.getName() + ", usted posee " + user.getAvailableCoins() + " moneda/s y "
 				+ user.getAvailableTime() + " horas disponible/s, estas son nuestras sugerencias:");
 		suggestion = generator.suggest();
 		while (suggestion != null) {
@@ -70,7 +73,7 @@ public class Interface {
 			System.out.printf("Puede aceptar o rechazar(a/r): $ ");
 			if (userInput(ExpectedAns.accept(), ExpectedAns.reject()).equals("aceptar")) {
 				generator.acceptPromotion();
-				System.out.println("Le quedan " + user.getAvailableMoney() + " moneda(s) y " + user.getAvailableTime()
+				System.out.println("Le quedan " + user.getAvailableCoins() + " moneda(s) y " + user.getAvailableTime()
 						+ " horas disponible(s)");
 			} else
 				generator.rejectPromotion();
@@ -95,8 +98,24 @@ public class Interface {
 		} while (!(Arrays.asList(expectedB).contains(ans) || Arrays.asList(expectedA).contains(ans)));
 		return ans;
 	}
-	
-	private static String userInput(String[] expectedAns) {
-		return userInput(expectedAns, expectedAns);
+
+	private static String userSelector(String[] expectedAns) {
+		String ans;
+		do {
+			ans = scanner.nextLine().toLowerCase();
+			if (ans.equals("0"))
+				return ans;
+			if (!Arrays.asList(expectedAns).contains(ans))
+				System.out.printf("El usuario " + ans + " no existe, por favor seleccione una opcion correcta: $");
+		} while (!Arrays.asList(expectedAns).contains(ans));
+		return ans;
+	}
+
+	private static void resetTables() {
+		AttractionDAO.restoreQuota();
+		UserDAO.restoreTime();
+		UserDAO.restoreCoins();
+		UserDAO.deleteCompras();
+		ItineraryDAO.deleteAll();
 	}
 }
