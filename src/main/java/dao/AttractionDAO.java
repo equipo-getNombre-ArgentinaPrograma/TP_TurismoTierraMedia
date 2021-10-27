@@ -16,9 +16,8 @@ public class AttractionDAO {
 		String name = resultSet.getString("name");
 		Double price = resultSet.getDouble("price");
 		Double completionTime = resultSet.getDouble("completion_time");
-		Integer quota = resultSet.getInt("quota");
 		String type = resultSet.getString("type");
-		return new Attraction(id, name, price, completionTime, quota, type);
+		return new Attraction(id, name, price, completionTime, type);
 	}
 
 // Devuelve todas las atracciones en la base de datos
@@ -46,6 +45,22 @@ public class AttractionDAO {
 			preparedStatement.setInt(1, id);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			return toAttraction(resultSet);
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+
+// Devuelve atraccion por tipo
+	public static ArrayList<Attraction> findByType(String type) {
+		ArrayList<Attraction> attractions = new ArrayList<Attraction>();
+		String query = "SELECT * FROM atracciones WHERE type = '" + type + "'";
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next())
+				attractions.add(toAttraction(resultSet));
+			return attractions;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
 		}
@@ -91,6 +106,20 @@ public class AttractionDAO {
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
 			return preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+
+	// Devuelve atraccion por id
+	public static int getQuotaById(int id) {
+		String query = "SELECT quota FROM atracciones WHERE id = ?";
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			return resultSet.getInt("quota");
 		} catch (Exception e) {
 			throw new MissingDataException(e);
 		}

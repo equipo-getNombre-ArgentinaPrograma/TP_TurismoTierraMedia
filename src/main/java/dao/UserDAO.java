@@ -55,9 +55,42 @@ public class UserDAO {
 		}
 	}
 
+	public static Double getSpentCoins(int id) {
+		double ans = 0;
+		String query = "SELECT spent_coins FROM usuarios WHERE id = ?";
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next())
+				ans = resultSet.getDouble("spent_coins");
+			return ans;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+
+	public static Double getSpentTime(int id) {
+		double ans = 0;
+		String query = "SELECT spent_time FROM usuarios WHERE id = ?";
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next())
+				ans = resultSet.getDouble("spent_time");
+			return ans;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+
 //	Usa monedas del usuario
 	public static int useCoins(double coins, int id) {
-		String query = "UPDATE usuarios SET available_coins = available_coins - " + coins + " where id = ?";
+		String query = "UPDATE usuarios SET available_coins = available_coins - " + coins + ", spent_coins = " + coins
+				+ " WHERE id = ?";
 		try {
 			Connection connection = ConnectionProvider.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -70,7 +103,8 @@ public class UserDAO {
 
 // Usa tiempo del usuario
 	public static int useTime(double time, int id) {
-		String query = "UPDATE usuarios SET available_time = available_time - " + time + " where id = ?";
+		String query = "UPDATE usuarios SET available_time = available_time - " + time + ", spent_time = " + time
+				+ " where id = ?";
 		try {
 			Connection connection = ConnectionProvider.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -84,7 +118,7 @@ public class UserDAO {
 // Devuelve el tiempo disponible a su estado inicial
 	public static boolean restoreTime() {
 		ArrayList<User> users = getAll();
-		String query = "UPDATE usuarios SET available_time = initial_time WHERE usuarios.id = ?";
+		String query = "UPDATE usuarios SET available_time = available_time + spent_time, spent_time = 0 WHERE usuarios.id = ?";
 		try {
 			Connection connection = ConnectionProvider.getConnection();
 			for (User user : users) {
@@ -101,7 +135,7 @@ public class UserDAO {
 // Devuelve las monedas disponibles a su estado inicial
 	public static boolean restoreCoins() {
 		ArrayList<User> users = getAll();
-		String query = "UPDATE usuarios SET available_coins = initial_coins WHERE usuarios.id = ?";
+		String query = "UPDATE usuarios SET available_coins = available_coins + spent_coins, spent_coins = 0 WHERE usuarios.id = ?";
 		try {
 			Connection connection = ConnectionProvider.getConnection();
 			for (User user : users) {
@@ -125,5 +159,22 @@ public class UserDAO {
 		} catch (Exception e) {
 			throw new MissingDataException(e);
 		}
+	}
+
+	public static int newUser(User user) {
+		String query = "INSERT INTO usuarios (id, name, available_coins, available_time, preferred_type) VALUES (?, ?, ?, ?, ?)";
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, user.getId());
+			preparedStatement.setString(2, user.getName());
+			preparedStatement.setDouble(3, user.getAvailableCoins());
+			preparedStatement.setDouble(4, user.getAvailableTime());
+			preparedStatement.setString(5, user.getPreferredType());
+			return preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+
 	}
 }

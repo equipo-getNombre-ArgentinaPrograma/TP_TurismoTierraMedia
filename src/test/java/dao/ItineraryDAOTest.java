@@ -20,7 +20,7 @@ public class ItineraryDAOTest {
 		assertTrue(user.acquire(AttractionDAO.findById(1)));
 		assertTrue(user.acquire(PromotionDAO.findById(3)));
 		Itinerary itinerary = new Itinerary(user);
-		assertEquals(1, ItineraryDAO.print(itinerary));
+		assertEquals(1, ItineraryDAO.print(user, itinerary.getSpentCoins(), itinerary.getSpentTime()));
 	}
 
 	//@Test
@@ -29,7 +29,7 @@ public class ItineraryDAOTest {
 		assertTrue(user.acquire(PromotionDAO.findById(1)));
 		assertTrue(user.acquire(PromotionDAO.findById(2)));
 		Itinerary itinerary = new Itinerary(user);
-		assertEquals(1, ItineraryDAO.print(itinerary));
+		assertEquals(1, ItineraryDAO.print(user, itinerary.getSpentCoins(), itinerary.getSpentTime()));
 	}
 
 	//@Test

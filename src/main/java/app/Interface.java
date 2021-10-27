@@ -10,6 +10,7 @@ import outObject.Itinerary;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class Interface {
 	private static SuggestionGenerator generator;
@@ -24,17 +25,18 @@ public class Interface {
 		users = UserDAO.getAll();
 		resetTables();
 		Itinerary itinerary;
-		System.out.println("Bienvenido a la Tierra Media! Elija su usuario para continuar (0 para salir):");
+		System.out.print("Bienvenido a la Tierra Media! ");
+		welcomeMessage();
 		showUsers();
 		chooseUser();
 		while (user != null) {
 			suggest(user);
 			itinerary = new Itinerary(user);
-			ItineraryDAO.print(itinerary);
+			itinerary.print();
 			System.out.println("--Usted tuvo " + user.getAcquiredSuggestions().size()
-					+ " adquisicion/es, debera gastar " + itinerary.getSpentMoney() + " moneda/s y requerira de "
+					+ " adquisicion/es, debera gastar " + itinerary.getSpentCoins() + " moneda/s y requerira de "
 					+ itinerary.getSpentTime() + " hora/s para completar su recorrido.\n");
-			System.out.println("Elija su usuario para continuar (0 para salir):");
+			welcomeMessage();
 			showUsers();
 			chooseUser();
 		}
@@ -42,26 +44,50 @@ public class Interface {
 		AttractionDAO.restoreQuota();
 	}
 
+// Muestra en pantalla un mensaje al azar de cada grupo para mostrar al usuario
+	public static void welcomeMessage() {
+		ArrayList<String> list1 = new ArrayList<String>();
+		list1.add("Elija su usuario para continuar (0 para salir)");
+		list1.add("Seleccione su usuario (escriba 0 para salir del sistema)");
+		list1.add("Por favor seleccione su usuario para continuar (0 para salir)");
+
+		ArrayList<String> list2 = new ArrayList<String>();
+		list2.add("Puede elegir por ID o por nombre");
+		list2.add("ID y nombre se consideran opciones validas");
+		list2.add("Puede seleccionar por nombre o numero de usuario");
+
+		ArrayList<String> list3 = new ArrayList<String>();
+		list3.add("Le recordamos que escribiendo 'crear' puede crear un nuevo usuario");
+		list3.add("Puede crear un usuario escribiendo 'crear'");
+		list3.add("Tambien puede crear un usuario escribiendo 'Crear'");
+
+		Random random = new Random();
+		System.out.printf(list1.get(random.nextInt(list1.size())) + "\n");
+		System.out.printf(list2.get(random.nextInt(list2.size())) + "\n");
+		System.out.printf(list3.get(random.nextInt(list3.size())) + "\n");
+	}
+
+// Muestra una lista de todos los usuarios
 	public static void showUsers() {
 		for (User user : users)
 			System.out.println(user.getId() + ". " + user.getName());
-		System.out.print("$");
+		System.out.print("$ ");
 	}
 
+// Elige un usuario valido
 	public static void chooseUser() {
-		String selection = userSelector(ExpectedAns.users(users.size()));
+		String selection = selector(ExpectedAns.users(users));
 		if (!selection.equals("0"))
 			changeUser(Integer.parseInt(selection) - 1);
 		else
 			user = null;
-
 	}
 
 	public static void changeUser(int selection) {
 		user = users.get(selection);
 	}
 
-	// Mientras haya promociones y el usuario quiera, se sugeriran promociones
+// Mientras haya promociones y el usuario quiera, se sugeriran promociones
 	private static void suggest(User user) {
 		generator.to(user);
 		System.out.println("Bienvenido " + user.getName() + ", usted posee " + user.getAvailableCoins() + " moneda/s y "
@@ -79,11 +105,11 @@ public class Interface {
 				generator.rejectPromotion();
 			suggestion = generator.suggest();
 		}
-		System.out.println("No hay mas sugerencias que cumplan con sus requisitos.\n");
+		System.out.println("No hay sugerencias que cumplan con sus requisitos.\n");
 	}
 
-	// A partir de dos series de resultados esperados, determina si la entrada es
-	// correcta y devuelve el primer resultado del grupo correcto
+// A partir de dos series de resultados esperados, determina si la entrada es
+// correcta y devuelve el primer resultado del grupo correcto
 	private static String userInput(String[] expectedA, String[] expectedB) {
 		String ans;
 		do {
@@ -99,19 +125,75 @@ public class Interface {
 		return ans;
 	}
 
-	private static String userSelector(String[] expectedAns) {
+// Toma el input del usuario
+	private static String userInput() {
+		String ans;
+		ans = scanner.nextLine();
+		return ans;
+	}
+
+// Toma un input del usuario determinado
+	private static String userInput(String type) {
+		if (type.equals("Double"))
+			return Double.toString(askForDouble());
+		String ans = scanner.nextLine();
+		return ans;
+	}
+
+// Pide al usuario un numero real positivo
+	private static Double askForDouble() {
+		Double ans;
+		while (true) {
+			if (!scanner.hasNextDouble()) {
+				System.out.println("La respuesta debe ser un numero real positivo: $ ");
+				scanner.next();
+			}
+			ans = Double.parseDouble(scanner.nextLine());
+			if (ans >= 0)
+				return ans;
+			else
+				System.out.println("El numero debe ser igual o mayor a cero: $ ");
+		}
+	}
+
+// Se ocupa de la seleccion del usuario, crear uno nuevo o salir del sistema
+	private static String selector(String[] expectedAns) {
 		String ans;
 		do {
 			ans = scanner.nextLine().toLowerCase();
+			for (User user : users)
+				if (ans.equals(user.getName().toLowerCase()))
+					return Integer.toString(user.getId());
 			if (ans.equals("0"))
 				return ans;
+			if (ans.equals("crear")) {
+				return Integer.toString(createUser().getId());
+			}
 			if (!Arrays.asList(expectedAns).contains(ans))
-				System.out.printf("El usuario " + ans + " no existe, por favor seleccione una opcion correcta: $");
+				System.out.printf("El usuario " + ans + " no existe, por favor seleccione una opcion correcta: $ ");
 		} while (!Arrays.asList(expectedAns).contains(ans));
 		return ans;
 	}
 
-	private static void resetTables() {
+// Crea un usuario, lo guarda en memoria y en db
+	private static User createUser() {
+		System.out.print("Bienvenido al creador de usuario, indique su nombre: $ ");
+		String name = userInput();
+		System.out.print("Indique sus monedas disponibles: $ ");
+		Double coins = Double.parseDouble(userInput("Double"));
+		System.out.print("Indique su tiempo disponible: $ ");
+		Double time = Double.parseDouble(userInput("Double"));
+		System.out.print("Indique su tipo de atraccion preferida: $ ");
+		String type = userInput().toLowerCase();
+		User newUser = new User(users.size() + 1, name, coins, time, type);
+		UserDAO.newUser(newUser);
+		users.add(newUser);
+		System.out.println("Felicitaciones " + newUser.getName() + "! Ya puede usar el sistema.\n");
+		return newUser;
+	}
+
+// Solo para test de sistema, devuelve las tablas a su valor original
+	public static void resetTables() {
 		AttractionDAO.restoreQuota();
 		UserDAO.restoreTime();
 		UserDAO.restoreCoins();
@@ -119,3 +201,5 @@ public class Interface {
 		ItineraryDAO.deleteAll();
 	}
 }
+
+//el usuario guarda las atracciones que compra, seria bueno sacarlas de la db?

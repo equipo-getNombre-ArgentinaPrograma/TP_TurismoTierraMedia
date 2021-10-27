@@ -16,7 +16,7 @@ public interface Acquirable {
 
 	public boolean isPromotion();
 	
-	public boolean equals(Object object);
+	public boolean shareAttraction(Object object);
 
 	public void printToScreen();
 	

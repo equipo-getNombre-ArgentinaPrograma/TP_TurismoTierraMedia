@@ -1,10 +1,13 @@
 package app;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import inObject.Attraction;
+import inObject.User;
+
 public enum ExpectedAns {
-	YES(new String[] { "si", "s", "yes", "y", "1" }),
-	NO(new String[] { "no", "n", "2" }),
-	ACCEPT(new String[] { "aceptar", "a", "1", "si", "s" }),
-	REJECT(new String[] { "rechazar", "r", "2", "no", "n" }),
+	YES(new String[] { "si", "s", "yes", "y", "1" }), NO(new String[] { "no", "n", "2" }),
+	ACCEPT(new String[] { "aceptar", "a", "1", "si", "s" }), REJECT(new String[] { "rechazar", "r", "2", "no", "n" }),
 	USERS(new String[] {});
 
 	private String[] options;
@@ -29,10 +32,10 @@ public enum ExpectedAns {
 		return REJECT.options;
 	}
 
-	public static String[] users(int size) {
-		String[] out = new String[size];
-		for (int i = 0; i < size; i++)
-			out[i] = Integer.toString(i+1);
+	public static String[] users(ArrayList<User> users) {
+		String[] out = new String[users.size()];
+		for (int i = 0; i < users.size(); i++)
+			out[i] = Integer.toString(i + 1);
 		return out;
-		}
 	}
+}

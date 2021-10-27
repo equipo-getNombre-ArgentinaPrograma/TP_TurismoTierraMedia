@@ -9,7 +9,7 @@ public enum Suggestions {
 		this.tipoSugerencia = type;
 	}
 
-	// Devuelvo el tipo de sugerencia en string
+// Devuelvo el tipo de sugerencia en string
 	public static String type(Acquirable suggestion) {
 		String out = null;
 		if (suggestion.isPromotion())

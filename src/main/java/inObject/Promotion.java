@@ -15,7 +15,7 @@ public abstract class Promotion implements Acquirable {
 		this.includedAttractions = attractions;
 	}
 
-	// Getters
+// Getters
 	public Attraction getAttraction1() {
 		return includedAttractions.get(0);
 	}
@@ -44,7 +44,7 @@ public abstract class Promotion implements Acquirable {
 		return calculateCompletionTime();
 	}
 
-	// Suma los precios de las dos atracciones
+// Suma los precios de las dos atracciones
 	protected double calculatePrice() {
 		this.price = 0;
 		this.price += getAttraction1().getPrice();
@@ -52,7 +52,7 @@ public abstract class Promotion implements Acquirable {
 		return price;
 	}
 
-	// Suma los tiempos de las dos atracciones
+// Suma los tiempos de las dos atracciones
 	protected double calculateCompletionTime() {
 		this.CompletionTime = 0;
 		this.CompletionTime += getAttraction1().getCompletionTime();
@@ -77,15 +77,12 @@ public abstract class Promotion implements Acquirable {
 		return true;
 	}
 
-	// Si se comparan atracciones devolvera true si tienen el mismo nombre
-
-	// Atraccion y promocion devolvera true si alguna atraccion
-	// dentro de la promocion tiene el mismo nombre que la atraccion
-	@Override
-	public boolean equals(Object object) {
+// Si se comparan atracciones devolvera true si tienen el mismo nombre
+// Atraccion y promocion devolvera true si la atraccion se encuentra en la promocion
+	public boolean shareAttraction(Object object) {
 		if (object instanceof Attraction)
 			for (Attraction atraccion : includedAttractions)
-				if (object.equals(atraccion))
+				if (((Attraction)object).shareAttraction(atraccion))
 					return true;
 		if (object instanceof Promotion)
 			for (Attraction atraccion : includedAttractions)

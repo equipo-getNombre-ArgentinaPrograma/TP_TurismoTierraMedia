@@ -20,7 +20,7 @@ public class Writer {
 			for (Acquirable ad : it.getAcquiredSuggestions())
 				salida.println(ad.toString());
 			// Se imprimen los demas datos pedidos
-			salida.println("Total a pagar;" + it.getSpentMoney());
+			salida.println("Total a pagar;" + it.getSpentCoins());
 			salida.println("Horas Necesarias;" + it.getSpentTime());
 
 			salida.close();

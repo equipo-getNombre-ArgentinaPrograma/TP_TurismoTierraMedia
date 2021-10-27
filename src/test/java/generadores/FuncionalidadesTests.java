@@ -34,7 +34,7 @@ public class FuncionalidadesTests {
 		assertEquals(atracciones.get(0).getName(), "Moria");
 		assertEquals(atracciones.get(1).getPrice(), 5, 0.1);
 		assertEquals(atracciones.get(2).getCompletionTime(), 6.5, 0.1);
-		assertEquals(atracciones.get(3).getCuposXdia(), 4);
+		assertEquals(atracciones.get(3).getQuotaByDay(), 4);
 		assertEquals(atracciones.get(4).getAttractionType(), "Paisaje");
 	}
 
@@ -83,11 +83,11 @@ public class FuncionalidadesTests {
 	public void restarCuposAtraccion() {
 		User user = usuarios.get(1); // Usuario 'Gandalf'
 		assertEquals(user.getAvailableCoins(), 100, 0.1); // Tiene 100 monedas
-		assertEquals(atracciones.get(3).getCuposXdia(), 4); // 'Mordor' tiene 4 cupos
+		assertEquals(atracciones.get(3).getQuotaByDay(), 4); // 'Mordor' tiene 4 cupos
 
 		assertTrue(user.acquire(atracciones.get(3))); // Adquiere 'Mordor'
 
-		assertEquals(atracciones.get(3).getCuposXdia(), 3); // 'Mordor' tiene 3 cupos
+		assertEquals(atracciones.get(3).getQuotaByDay(), 3); // 'Mordor' tiene 3 cupos
 	}
 
 	@Test
@@ -98,38 +98,38 @@ public class FuncionalidadesTests {
 
 		assertTrue(user.acquire(promos.get(0))); // Adquiere la promocion
 
-		assertEquals(atracciones.get(1).getCuposXdia(), 24); // 'Minas Tirith' tiene 24 cupos
-		assertEquals(atracciones.get(4).getCuposXdia(), 14); // 'Abismo de Helm' tiene 14 cupos
+		assertEquals(atracciones.get(1).getQuotaByDay(), 24); // 'Minas Tirith' tiene 24 cupos
+		assertEquals(atracciones.get(4).getQuotaByDay(), 14); // 'Abismo de Helm' tiene 14 cupos
 	}
 
 	@Test
 	public void atraccionSeQuedaSinCupos() {
-		assertEquals(atracciones.get(5).getCuposXdia(), 30); // 'Lothlorien' tiene 30 cupos
+		assertEquals(atracciones.get(5).getQuotaByDay(), 30); // 'Lothlorien' tiene 30 cupos
 
 		for (int i = 0; i < 30; i++)
 			assertTrue(atracciones.get(5).useQuota()); // Uso 30 cupos
 
-		assertEquals(atracciones.get(5).getCuposXdia(), 0); // 'Lothlorien' tiene 0 cupos
+		assertEquals(atracciones.get(5).getQuotaByDay(), 0); // 'Lothlorien' tiene 0 cupos
 
 		assertFalse(atracciones.get(5).useQuota()); // No puedo usar mas cupos
 
-		assertEquals(atracciones.get(5).getCuposXdia(), 0); // 'Lothlorien' sigue con 0 cupos
+		assertEquals(atracciones.get(5).getQuotaByDay(), 0); // 'Lothlorien' sigue con 0 cupos
 	}
 
 	@Test
 	public void promocionSeQuedaSinCupos() {
-		assertEquals(promos.get(2).getAttraction1().getCuposXdia(), 12); // 'Bosque Negro' tiene 12 cupos
-		assertEquals(promos.get(2).getAttraction2().getCuposXdia(), 4); // 'Mordor' tiene 4 cupos
+		assertEquals(promos.get(2).getAttraction1().getQuotaByDay(), 12); // 'Bosque Negro' tiene 12 cupos
+		assertEquals(promos.get(2).getAttraction2().getQuotaByDay(), 4); // 'Mordor' tiene 4 cupos
 
 		for (int i = 0; i < 4; i++)
 			assertTrue(promos.get(2).useQuota()); // Uso 4 cupos
 
-		assertEquals(promos.get(2).getAttraction2().getCuposXdia(), 0); // 'Mordor' tiene 0 cupos
+		assertEquals(promos.get(2).getAttraction2().getQuotaByDay(), 0); // 'Mordor' tiene 0 cupos
 
 		assertFalse(promos.get(2).useQuota()); // No puedo usar mas cupos
 
-		assertEquals(promos.get(2).getAttraction1().getCuposXdia(), 8); // 'Bosque Negro' tiene 8 cupos
-		assertEquals(promos.get(2).getAttraction2().getCuposXdia(), 0); // 'Mordor' tiene 0 cupos
+		assertEquals(promos.get(2).getAttraction1().getQuotaByDay(), 8); // 'Bosque Negro' tiene 8 cupos
+		assertEquals(promos.get(2).getAttraction2().getQuotaByDay(), 0); // 'Mordor' tiene 0 cupos
 	}
 
 	@Test
@@ -144,7 +144,7 @@ public class FuncionalidadesTests {
 		assertEquals(user.getAvailableTime(), 1.5, 0.1); // Le quedan 1.5 horas restantes
 
 		Itinerary it = new Itinerary(user); // Inicializo el itinerario del usuario
-		assertEquals(it.getSpentMoney(), 45, 0.1); // Debe gastar 45 monedas
+		assertEquals(it.getSpentCoins(), 45, 0.1); // Debe gastar 45 monedas
 		assertEquals(it.getSpentTime(), 3, 0.1); // Necesita 3 horas
 
 		// Accedo a las sugerencias desde el itinerario

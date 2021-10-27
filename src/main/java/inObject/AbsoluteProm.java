@@ -9,7 +9,7 @@ public class AbsoluteProm extends Promotion {
 		this.price = price;
 	}
 
-	// Getters
+// Getters
 	@Override
 	public double getPrice() {
 		return price;

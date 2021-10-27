@@ -10,7 +10,7 @@ public class PorcentualProm extends Promotion {
 		this.discount = discount;
 	}
 
-	// Getters
+// Getters
 	public double getDiscount() {
 		return discount;
 	}

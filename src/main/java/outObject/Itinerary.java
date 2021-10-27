@@ -2,6 +2,8 @@ package outObject;
 
 import java.util.ArrayList;
 
+import dao.ItineraryDAO;
+import dao.UserDAO;
 import inObject.Acquirable;
 import inObject.User;
 
@@ -12,35 +14,26 @@ public class Itinerary {
 		this.user = user;
 	}
 
-	// Getters
+// Getters
 	public User getUser() {
 		return user;
 	}
 	
 	public ArrayList<Acquirable> getAcquiredSuggestions(){
-		return user.getAcquiredSuggestions();
+		return getUser().getAcquiredSuggestions();
 	}
 
-	public double getSpentMoney() {
-		return calculateSpentMoney();
+	public double getSpentCoins() {
+		return UserDAO.getSpentCoins(user.getId());
 	}
 
 	public double getSpentTime() {
-		return calculateSpentTime();
+		return UserDAO.getSpentTime(user.getId());
+	}
+	public void print() {
+		if (getAcquiredSuggestions().size() > 0)
+			ItineraryDAO.print(user, getSpentCoins(), getSpentTime());
 	}
 
-	// Calculan los atributos
-	private double calculateSpentMoney() {
-		double sum = 0;
-		for (Acquirable s : getUser().getAcquiredSuggestions())
-			sum += s.getPrice();
-		return sum;
-	}
 
-	private double calculateSpentTime() {
-		double sum = 0;
-		for (Acquirable s : getUser().getAcquiredSuggestions())
-			sum += s.getCompletionTime();
-		return sum;
-	}
 }

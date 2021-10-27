@@ -3,34 +3,36 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import db.ConnectionProvider;
 import inObject.Acquirable;
 import inObject.Attraction;
-import outObject.Itinerary;
+import inObject.User;
+import dao.*;
 
 public class ItineraryDAO {
 // Escribe el itinerario en la db
-	public static int print(Itinerary itinerary) {
+	public static int print(User user, Double coins, Double time) {
 		String acquiredAttractions = "";
 		String acquiredPromotions = "";
-		for (Acquirable acquirable : itinerary.getAcquiredSuggestions())
+		for (Acquirable acquirable : user.getAcquiredSuggestions())
 			if (acquirable.isPromotion()) {
 				acquiredPromotions += acquirable.getId() + ". ";
 				for (Attraction attraction : AttractionDAO.findByPromotion(acquirable.getId()))
 					acquiredAttractions += attraction.getName() + ". ";
 			} else
 				acquiredAttractions += ((Attraction) acquirable).getName() + ". ";
-		if (itineraryExists(itinerary))
-			delete(itinerary.getUser().getId());
-		String query = "INSERT INTO itinerarios (user_id, spent_money, spent_time, attractions_acquired, promotions_acquired) VALUES (?, ?, ?, '"
+		if (itineraryExists(user))
+			delete(user.getId());
+		String query = "INSERT INTO itinerarios (user_id, spent_money, spent_time, attractions_acquired, promotions_acquired_id) VALUES (?, ?, ?, '"
 				+ acquiredAttractions + "', '" + acquiredPromotions + "')";
 		try {
 			Connection connection = ConnectionProvider.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, itinerary.getUser().getId());
-			preparedStatement.setDouble(2, itinerary.getSpentMoney());
-			preparedStatement.setDouble(3, itinerary.getSpentTime());
+			preparedStatement.setInt(1, user.getId());
+			preparedStatement.setDouble(2, coins);
+			preparedStatement.setDouble(3, time);
 			return preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			throw new MissingDataException(e);
@@ -38,12 +40,12 @@ public class ItineraryDAO {
 	}
 
 // Devuelve true si el itinerario ya existe	
-	private static boolean itineraryExists(Itinerary itinerary) {
+	private static boolean itineraryExists(User user) {
 		String query = "SELECT count(*) as 'exists' FROM itinerarios WHERE user_id = ?";
 		try {
 			Connection connection = ConnectionProvider.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, itinerary.getUser().getId());
+			preparedStatement.setInt(1, user.getId());
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.getInt("exists") != 0)
 				return true;
@@ -65,7 +67,7 @@ public class ItineraryDAO {
 			throw new MissingDataException(e);
 		}
 	}
-	
+
 // Borra todos los itinerarios creados
 	public static int deleteAll() {
 		String query = "DELETE FROM itinerarios";

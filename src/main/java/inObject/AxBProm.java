@@ -8,7 +8,7 @@ public class AxBProm extends Promotion {
 		super(id, attractions, type);
 	}
 
-	// Getter
+// Getter
 	public Attraction getFreeAttraction() {
 		return includedAttractions.get(2);
 	}
@@ -28,13 +28,13 @@ public class AxBProm extends Promotion {
 		return super.isFull() && !getFreeAttraction().isFull();
 	}
 
-	// Agrega al metodo heredado el tiempo de su atributo propio
+// Agrega al metodo heredado el tiempo de su atributo propio
 	@Override
 	protected double calculateCompletionTime() {
 		return super.calculateCompletionTime() + getFreeAttraction().getCompletionTime();
 	}
 
-	// Agrega los campos propios al toString heredado
+// Agrega los campos propios al toString heredado
 	@Override
 	public String toString() {
 		return super.toString() + ";Promocion de regalo: " + getFreeAttraction().getName();

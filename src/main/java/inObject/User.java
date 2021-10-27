@@ -2,6 +2,7 @@ package inObject;
 
 import java.util.ArrayList;
 
+import dao.ItineraryDAO;
 import dao.UserDAO;
 
 public class User {
@@ -20,7 +21,7 @@ public class User {
 		this.preferredType = type;
 	}
 
-	// Getters
+// Getters
 	public int getId() {
 		return id;
 	}
@@ -45,7 +46,7 @@ public class User {
 		return acquiredSuggestions;
 	}
 
-	// Adquiere la sugerencia sumandola a las listas y resta tiempo y presupuesto
+// Adquiere la sugerencia sumandola a las listas y resta tiempo y presupuesto
 	public boolean acquire(Acquirable suggestion) {
 		if (canBuy(suggestion)) {
 			getAcquiredSuggestions().add(suggestion);
@@ -64,7 +65,7 @@ public class User {
 		return true;
 	}
 
-	// Chequea si una promocion entra en su presupuesto y tiempo disponible
+// Chequea si una promocion entra en su presupuesto y tiempo disponible
 	public boolean canBuy(Acquirable suggestion) {
 		boolean buy = true;
 		// Si la atraccion ya se encuentra adquirida por el usuario no podra ser adquirida otra vez
@@ -83,4 +84,73 @@ public class User {
 		return "[" + getName() + ", " + getAvailableCoins() + ", " + getAvailableTime() + ", " + getPreferredType()
 				+ "]";
 	}
+/*
+
+public class User {
+	private int id;
+	private String name;
+
+	public User(Integer id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
+// Getters
+	public int getId() {
+		return id;
+	}
+	
+	public String getName() {
+		return UserDAO.getName(id);
+	}
+
+	public double getAvailableCoins() {
+		return UserDAO.getCoins(id);
+	}
+
+	public double getAvailableTime() {
+		return UserDAO.getTime(id);
+	}
+
+	public String getPreferredType() {
+		return UserDAO.getPreferredType(id);
+	}
+
+	public ArrayList<Acquirable> getAcquiredSuggestions() {
+		return User.DAO(getAcquiredSuggestions(id));
+	}
+
+// Adquiere la sugerencia sumandola a las listas y resta tiempo y presupuesto
+	public boolean acquire(Acquirable suggestion) {
+		if (canBuy(suggestion)) {
+			UserDAO.acquire(suggestion, id);
+			UserDAO.useCoins(suggestion.getPrice(), id);
+			UserDAO.useTime(suggestion.getCompletionTime(), id);
+			suggestion.useQuota();
+			return true;
+		}
+		return false;
+	}
+
+// Chequea si una promocion entra en su presupuesto y tiempo disponible
+	public boolean canBuy(Acquirable suggestion) {
+		boolean buy = true;
+		// Si la atraccion ya se encuentra adquirida por el usuario no podra ser adquirida otra vez
+		if (getAcquiredSuggestions().contains(suggestion))
+			buy = false;
+		// Tampoco si no hay dinero, tiempo o cupos
+		if (suggestion.getCompletionTime() > getAvailableTime()
+				  || suggestion.getPrice() > getAvailableCoins()
+				  || suggestion.isFull())
+			buy = false;
+		return buy;
+	}
+
+	@Override
+	public String toString() {
+		return "[" + getName() + ", " + getAvailableCoins() + ", " + getAvailableTime() + ", " + getPreferredType()
+				+ "]";
+	}
+}
+*/
 }
