@@ -17,8 +17,10 @@ public class UserDAOTest {
 	public void reiniciarListas() {
 		Interface.resetTables();
 	}
-	//@Test
+
+	@Test
 	public void obtenerListaUsuarios() {
+		System.out.println("Todos los usuarios:");
 		ArrayList<User> users = new ArrayList<User>();
 		users = UserDAO.getAll();
 		for (User user : users)
@@ -26,7 +28,7 @@ public class UserDAOTest {
 		System.out.println("--------------------");
 	}
 
-	//@Test
+	@Test
 	public void agregarCompraDeUsuario() {
 		assertEquals(1, UserDAO.acquire(new Attraction(1, "Atraccion de prueba", 10d, 2d, "Aventura"), 1));
 	}
@@ -35,10 +37,10 @@ public class UserDAOTest {
 	public void usarMonedas() {
 		assertEquals(1, UserDAO.useCoins(1, 1));
 	}
-	
+
 	@After
-	public void obtenerMonedasGastadasUsuario(){
-		System.out.println(UserDAO.getSpentCoins(1));
+	public void obtenerMonedasGastadasUsuario() {
+		assertEquals(1, UserDAO.getSpentCoins(1), 1);
 	}
 
 }

@@ -23,7 +23,7 @@ public class Interface {
 		generator = new SuggestionGenerator();
 		scanner = new Scanner(System.in);
 		users = UserDAO.getAll();
-		resetTables();
+		// resetTables();
 		Itinerary itinerary;
 		System.out.print("Bienvenido a la Tierra Media! ");
 		welcomeMessage();
@@ -160,12 +160,15 @@ public class Interface {
 	private static String selector(String[] expectedAns) {
 		String ans;
 		do {
-			ans = scanner.nextLine().toLowerCase();
+			ans = userInput();
+			// Si el input coincide con el nombre de un usuario, devuelve el id
 			for (User user : users)
 				if (ans.equals(user.getName().toLowerCase()))
 					return Integer.toString(user.getId());
+			// Si es 0 da por terminado el programa
 			if (ans.equals("0"))
 				return ans;
+			// Si es 'crear', crea un usuario y devuelve el id del usuario creado
 			if (ans.equals("crear")) {
 				return Integer.toString(createUser().getId());
 			}
@@ -201,5 +204,3 @@ public class Interface {
 		ItineraryDAO.deleteAll();
 	}
 }
-
-//el usuario guarda las atracciones que compra, seria bueno sacarlas de la db?

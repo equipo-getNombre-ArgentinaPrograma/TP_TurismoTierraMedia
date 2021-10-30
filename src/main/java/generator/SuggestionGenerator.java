@@ -61,7 +61,7 @@ public class SuggestionGenerator {
 // ya que es un TreeMap, las sugerencias preferidas se mostraran primero
 	private Integer isPreferred(Acquirable suggestion) {
 		Integer output;
-		if (getUser().getPreferredType().equals(suggestion.getAttractionType()))
+		if (getUser().getPreferredType().toLowerCase().equals(suggestion.getAttractionType().toLowerCase()))
 			output = 0;
 		else
 			output = 1;
