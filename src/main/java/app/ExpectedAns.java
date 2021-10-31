@@ -1,13 +1,15 @@
 package app;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import inObject.Attraction;
 import inObject.User;
 
 public enum ExpectedAns {
-	YES(new String[] { "si", "s", "yes", "y", "1" }), NO(new String[] { "no", "n", "2" }),
-	ACCEPT(new String[] { "aceptar", "a", "1", "si", "s" }), REJECT(new String[] { "rechazar", "r", "2", "no", "n" }),
+	YES(new String[] { "si", "s", "yes", "y", "1" }), 
+	NO(new String[] { "no", "n", "2" }),
+	
+	ACCEPT(new String[] { "aceptar", "a", "1", "si", "s" }), 
+	REJECT(new String[] { "rechazar", "r", "2", "no", "n" }),
+	
 	USERS(new String[] {});
 
 	private String[] options;

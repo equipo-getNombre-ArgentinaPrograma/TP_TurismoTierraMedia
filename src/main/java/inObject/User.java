@@ -1,8 +1,6 @@
 package inObject;
 
 import java.util.ArrayList;
-
-import dao.ItineraryDAO;
 import dao.UserDAO;
 
 public class User {
@@ -31,11 +29,11 @@ public class User {
 	}
 
 	public double getAvailableCoins() {
-		return availableCoins;
+		return Math.round(availableCoins*100.0)/100.0;
 	}
 
 	public double getAvailableTime() {
-		return availableTime;
+		return Math.round(availableTime*100.0)/100.0;
 	}
 
 	public String getPreferredType() {

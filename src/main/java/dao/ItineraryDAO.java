@@ -3,13 +3,11 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 import db.ConnectionProvider;
 import inObject.Acquirable;
 import inObject.Attraction;
 import inObject.User;
-import dao.*;
 
 public class ItineraryDAO {
 // Escribe el itinerario en la db

@@ -18,7 +18,7 @@ public class PorcentualProm extends Promotion {
 	@Override
 	protected double calculatePrice() {
 		this.price = super.calculatePrice() * (1 - (getDiscount() / 100));
-		return this.price = (double) Math.round(this.price * 10d) / 10d;
+		return price = Math.round(price*100.0)/100.0;
 	}
 
 	@Override

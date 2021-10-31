@@ -89,7 +89,7 @@ public class UserDAO {
 
 //	Usa monedas del usuario
 	public static int useCoins(double coins, int id) {
-		String query = "UPDATE usuarios SET available_coins = available_coins - " + coins + ", spent_coins = " + coins
+		String query = "UPDATE usuarios SET available_coins = available_coins - " + coins + ", spent_coins = spent_coins + " + coins
 				+ " WHERE id = ?";
 		try {
 			Connection connection = ConnectionProvider.getConnection();
@@ -103,7 +103,7 @@ public class UserDAO {
 
 // Usa tiempo del usuario
 	public static int useTime(double time, int id) {
-		String query = "UPDATE usuarios SET available_time = available_time - " + time + ", spent_time = " + time
+		String query = "UPDATE usuarios SET available_time = available_time - " + time + ", spent_time = spent_time + " + time
 				+ " where id = ?";
 		try {
 			Connection connection = ConnectionProvider.getConnection();

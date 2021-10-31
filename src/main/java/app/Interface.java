@@ -23,7 +23,7 @@ public class Interface {
 		generator = new SuggestionGenerator();
 		scanner = new Scanner(System.in);
 		users = UserDAO.getAll();
-		// resetTables();
+		resetTables();
 		Itinerary itinerary;
 		System.out.print("Bienvenido a la Tierra Media! ");
 		welcomeMessage();
